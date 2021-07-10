@@ -10,8 +10,6 @@ class CreateDoctors < ActiveRecord::Migration[6.1]
       t.string :zip
       t.string :phone
       t.boolean :vetted
-      t.references :insurance
-      t.references :specialty
 
       t.timestamps
     end

@@ -11,8 +11,6 @@ class CreateMentalHealthProfessionals < ActiveRecord::Migration[6.1]
       t.string :phone
       t.string :cost
       t.boolean :vetted
-      t.references :insurance
-      t.references :specialty
 
       t.timestamps
     end

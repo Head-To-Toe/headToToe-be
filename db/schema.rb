@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_020034) do
+ActiveRecord::Schema.define(version: 2021_07_10_163240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "doctor_insurances", force: :cascade do |t|
+    t.bigint "insurance_id"
+    t.bigint "doctor_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["doctor_id"], name: "index_doctor_insurances_on_doctor_id"
+    t.index ["insurance_id"], name: "index_doctor_insurances_on_insurance_id"
+  end
+
+  create_table "doctor_specialties", force: :cascade do |t|
+    t.bigint "specialty_id"
+    t.bigint "doctor_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["doctor_id"], name: "index_doctor_specialties_on_doctor_id"
+    t.index ["specialty_id"], name: "index_doctor_specialties_on_specialty_id"
+  end
 
   create_table "doctors", force: :cascade do |t|
     t.string "first_name"
@@ -25,12 +43,8 @@ ActiveRecord::Schema.define(version: 2021_07_10_020034) do
     t.string "zip"
     t.string "phone"
     t.boolean "vetted"
-    t.bigint "insurance_id"
-    t.bigint "specialty_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["insurance_id"], name: "index_doctors_on_insurance_id"
-    t.index ["specialty_id"], name: "index_doctors_on_specialty_id"
   end
 
   create_table "insurances", force: :cascade do |t|
@@ -50,12 +64,26 @@ ActiveRecord::Schema.define(version: 2021_07_10_020034) do
     t.string "phone"
     t.string "cost"
     t.boolean "vetted"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mhp_insurances", force: :cascade do |t|
+    t.bigint "mental_health_professional_id"
     t.bigint "insurance_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["insurance_id"], name: "index_mhp_insurances_on_insurance_id"
+    t.index ["mental_health_professional_id"], name: "index_mhp_insurances_on_mental_health_professional_id"
+  end
+
+  create_table "mhp_specialties", force: :cascade do |t|
+    t.bigint "mental_health_professional_id"
     t.bigint "specialty_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["insurance_id"], name: "index_mental_health_professionals_on_insurance_id"
-    t.index ["specialty_id"], name: "index_mental_health_professionals_on_specialty_id"
+    t.index ["mental_health_professional_id"], name: "index_mhp_specialties_on_mental_health_professional_id"
+    t.index ["specialty_id"], name: "index_mhp_specialties_on_specialty_id"
   end
 
   create_table "specialties", force: :cascade do |t|
