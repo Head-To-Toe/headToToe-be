@@ -6,6 +6,17 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.0.0
+        environment:
+          ENV: CIRCLE
+          DATABASE_URL: postgresql://circleci@localhost/circle_test
+      - image: circleci/postgres:9.6
+        environment:
+          PGHOST: localhost
+          PGUSER: circleci
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+          RAILS_ENV: test
     executor: ruby/default
     steps:
       - checkout
@@ -13,8 +24,9 @@ jobs:
           name: Which bundler?
           command: bundler -v
       - ruby/bundle-install
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
       - run: 
           name: Run tests
           command: bundle exec rspec
-
-
