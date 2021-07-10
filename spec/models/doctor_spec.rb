@@ -5,7 +5,7 @@ RSpec.describe Doctor, type: :model do
     it { should validate_presence_of(:first_name)}
     it { should validate_presence_of(:last_name)}
     it { should validate_presence_of(:state)}
-    it { should validate_presence_of(:vetted)}
+    it { should validate_inclusion_of(:vetted).in?([true, false])}
   end
 
   describe "relationships" do
