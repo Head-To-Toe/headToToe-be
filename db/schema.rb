@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_015040) do
+ActiveRecord::Schema.define(version: 2021_07_10_015140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 2021_07_10_015040) do
     t.string "company"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mental_health_professionals", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "street"
+    t.string "unit"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "phone"
+    t.boolean "vetted"
+    t.bigint "insurance_id"
+    t.bigint "specialty_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["insurance_id"], name: "index_mental_health_professionals_on_insurance_id"
+    t.index ["specialty_id"], name: "index_mental_health_professionals_on_specialty_id"
   end
 
   create_table "specialties", force: :cascade do |t|

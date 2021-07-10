@@ -1,0 +1,2 @@
+class MentalHealthProfessional < ApplicationRecord
+end
