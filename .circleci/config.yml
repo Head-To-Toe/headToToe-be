@@ -9,6 +9,14 @@ jobs:
         environment:
           ENV: CIRCLE
           DATABASE_URL: postgresql://circleci@localhost/circle_test
+      - image: circleci/postgres:9.6
+        environment:
+          PGHOST: localhost
+          PGUSER: circleci
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+          RAILS_ENV: test
     executor: ruby/default
     steps:
       - checkout
