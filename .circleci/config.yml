@@ -13,9 +13,6 @@ jobs:
           name: Which bundler?
           command: gem install bundler -v 2.1.4
       - run: 
-          name: Create environment
-          command: bundle exec rails db:{create,migrate,seed} RAILS_ENV=test
-      - run: 
           name: Run tests
           command: bundle exec rspec
 
