@@ -3,8 +3,8 @@ Specialty.destroy_all
 Doctor.destroy_all
 MentalHealthProfessional.destroy_all
 
-15.times { Insurance.create!( company: Faker::Company.name ) }
-15.times { Specialty.create!( name: Faker::Games::DnD.language ) }
+15.times { Insurance.find_or_create_by!( company: Faker::Company.name ) }
+15.times { Specialty.find_or_create_by!( name: Faker::Games::DnD.language ) }
 
 150.times do Doctor.create!(
     first_name: Faker::Creature::Animal.name,
@@ -16,6 +16,33 @@ MentalHealthProfessional.destroy_all
     unit: Faker::Address.secondary_address,
     vetted: [true, false].sample,
     phone: '234-456-2244'
+)
+end
+
+10.times do Doctor.create!(
+    first_name: Faker::Creature::Animal.name,
+    last_name: Faker::Games::Pokemon.name,
+    state: 'Colorado',
+    city: Faker::Address.city,
+    zip: '19384',
+    street: Faker::Address.street_address,
+    unit: Faker::Address.secondary_address,
+    vetted: true,
+    phone: '234-456-2244'
+)
+end
+
+10.times do MentalHealthProfessional.create!(
+    first_name: Faker::Creature::Animal.name,
+    last_name: Faker::Games::Pokemon.name,
+    state: 'Colorado',
+    city: Faker::Address.city,
+    street: Faker::Address.street_address,
+    zip: '10385',
+    unit: Faker::Address.secondary_address,
+    vetted: true,
+    phone: '234-456-2244',
+    cost: '$123-150'
 )
 end
 
