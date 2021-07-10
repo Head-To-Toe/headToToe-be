@@ -80,6 +80,13 @@ GEM
     diff-lcs (1.4.4)
     docile (1.4.0)
     erubi (1.10.0)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (2.18.0)
+      i18n (>= 1.6, < 2)
     fast_jsonapi (1.5)
       activesupport (>= 4.2)
     ffi (1.15.3)
@@ -218,6 +225,8 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.4)
   capybara
+  factory_bot_rails
+  faker
   fast_jsonapi
   listen (~> 3.3)
   pg (~> 1.1)
