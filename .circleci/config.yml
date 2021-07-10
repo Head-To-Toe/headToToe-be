@@ -6,6 +6,9 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.0.0
+        environment:
+          ENV: CIRCLE
+          DATABASE_URL: postgresql://circleci@localhost/circle_test
     executor: ruby/default
     steps:
       - checkout
