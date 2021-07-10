@@ -14,8 +14,8 @@ jobs:
           command: bundler -v
       - ruby/bundle-install
       - run: 
-        name: Create environment
-        command: rails db:{create,migrate,seed} RAILS_ENV=test
+          name: Create environment
+          command: rails db:create
       - run: 
           name: Run tests
           command: bundle exec rspec
