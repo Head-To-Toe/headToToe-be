@@ -22,13 +22,13 @@ Things you may want to cover:
 * Deployment instructions </br>
 
 ## Endpoints
-URL: https://head-to-toe-be.herokuapp.com/ </br></br>
+URL: https://head-to-toe-be.herokuapp.com/api/v1 </br></br>
 The medical professionals endpoint current has two required parameters: type, and state.  
 The type parameter accepts two values: doctors and mhp ( mental health professionals ).  
 Currently the state parameter only accepts capitalized spelled out states.  
 Example requests:  
 
-GET `/medical_professionals?type=doctor, state=South Dakota`   
+GET `/medical_professionals?type=doctor&state=South Dakota`   
 Example response:   
 ```
   {
@@ -115,7 +115,7 @@ Example response:
 }
 ```
 
-GET `/medical_professionals?type=mhp, state=Massachusetts`   
+GET `/medical_professionals?type=mhp&state=Massachusetts`   
 Example response:   
 ```
 {
