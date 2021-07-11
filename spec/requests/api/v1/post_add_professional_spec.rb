@@ -13,8 +13,8 @@ RSpec.describe 'POST /add_professional' do
           zip: "12345",
           phone: "1234567890",
           profession: "doctor",
-          insurance: "BigMoney, OtherBigMoney",
-          specialties: "Stuff, Things, Problems"
+          insurance: ["BigMoney", "OtherBigMoney"],
+          specialties: ["Stuff", "Things", "Problems"]
       }
   
       post '/api/v1/add_professional', 
@@ -26,7 +26,7 @@ RSpec.describe 'POST /add_professional' do
       }
   
       expect(response).to be_successful
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(201)
     end
   end
 end

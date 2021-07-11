@@ -15,6 +15,8 @@ class Api::V1::AddProfessionalController < ApplicationController
     doctor = doctor_params 
     new_doctor = Doctor.new(doctor)
     if new_doctor.save
+      set_insurance(new_doctor)
+      set_specialties(new_doctor)
       render status: :created
     else
       render status: :bad_request
@@ -37,5 +39,19 @@ class Api::V1::AddProfessionalController < ApplicationController
 
   def mhp_params
     params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
+  end
+
+  def set_insurance(doctor)
+    params[:insurance].each do |insurance|
+      i = Insurance.find_or_create_by(company: insurance)
+      DoctorInsurance.create(doctor_id: doctor.id, insurance_id: i.id)
+    end
+  end
+
+  def set_specialties(doctor)
+    params[:specialties].each do |specialty|
+      i = Specialty.find_or_create_by(name: specialty)
+      DoctorSpecialty.create(doctor_id: doctor.id, specialty_id: i.id)
+    end
   end
 end
