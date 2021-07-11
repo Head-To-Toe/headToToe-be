@@ -1,6 +1,7 @@
 class Api::V1::AddProfessionalController < ApplicationController
   def create
-    key = request.headers["api-key"]
+    return render status: :bad_request if authenticate
+    authenticate
     case params[:profession]
     when 'doctor'
       create_doctor
@@ -58,10 +59,17 @@ class Api::V1::AddProfessionalController < ApplicationController
   end
 
   def doctor_params
-    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
+    params.require(:add_professional)
+    .permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
   end
 
   def mhp_params
-    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
+    params.require(:add_professional)
+    .permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
+  end
+
+  def authenticate
+    return true if request.headers["api-key"] == 'aidanisthebest'
+    false
   end
 end
