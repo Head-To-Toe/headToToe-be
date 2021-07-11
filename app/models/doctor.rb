@@ -2,7 +2,7 @@ class Doctor < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :state, presence: true
-  validates :vetted, presence: true
+  validates :vetted, :inclusion => {:in => [true, false]}
 
   has_many :doctor_insurances
   has_many :doctor_specialties
