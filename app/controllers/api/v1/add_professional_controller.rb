@@ -41,10 +41,15 @@ class Api::V1::AddProfessionalController < ApplicationController
     params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
   end
 
-  def set_insurance(doctor)
+  def set_insurance(professional)
     params[:insurance].each do |insurance|
       i = Insurance.find_or_create_by(company: insurance)
-      DoctorInsurance.create(doctor_id: doctor.id, insurance_id: i.id)
+      case params[:profession]
+      when 'doctor'
+        DoctorInsurance.create(doctor_id: professional.id, insurance_id: i.id)
+      when 'mhp'
+        MhpInsurance.create(mhp_id: professional.id, insurance_id: i.id)
+      end
     end
   end
 
