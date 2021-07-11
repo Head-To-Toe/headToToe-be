@@ -3,8 +3,8 @@ Specialty.destroy_all
 Doctor.destroy_all
 MentalHealthProfessional.destroy_all
 
-15.times { Insurance.find_or_create_by!( company: Faker::Company.name ) }
-15.times { Specialty.find_or_create_by!( name: Faker::Games::DnD.language ) }
+15.times { Insurance.find_or_create_by!( company: Faker::Types.rb_string ) }
+15.times { Specialty.find_or_create_by!( name: Faker::Types.rb_string ) }
 
 150.times do Doctor.create!(
     first_name: Faker::Creature::Animal.name,
