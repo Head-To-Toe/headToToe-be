@@ -91,4 +91,36 @@ RSpec.describe 'POST /add_professional' do
       end
     end
   end
+
+  context 'sad path' do
+    context 'doctors' do
+      it 'returns 401 if api key is wrong' do
+        body = {
+            first_name: "FirstName",
+            last_name: "LastName",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            cost: "$100-120",
+            profession: "mhp",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/add_professional', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api_key": "aidanistheworst"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(401)
+      end
+    end
+  end
 end
