@@ -1,7 +1,6 @@
 class Api::V1::AddProfessionalController < ApplicationController
   def create
-    return render status: :bad_request if authenticate
-    authenticate
+    return render status: :unauthorized if unauthorized
     case params[:profession]
     when 'doctor'
       create_doctor
@@ -68,8 +67,8 @@ class Api::V1::AddProfessionalController < ApplicationController
     .permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
   end
 
-  def authenticate
-    return true if request.headers["api-key"] == 'aidanisthebest'
+  def unauthorized
+    return true if request.headers["api_key"] != 'aidanisthebest'
     false
   end
 end
