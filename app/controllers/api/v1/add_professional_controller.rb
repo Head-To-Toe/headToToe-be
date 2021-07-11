@@ -12,8 +12,7 @@ class Api::V1::AddProfessionalController < ApplicationController
   private
 
   def create_doctor
-    doctor = doctor_params 
-    new_doctor = Doctor.new(doctor)
+    new_doctor = Doctor.new(doctor_params)
     if new_doctor.save
       set_insurance(new_doctor)
       set_specialties(new_doctor)
@@ -24,23 +23,16 @@ class Api::V1::AddProfessionalController < ApplicationController
   end
 
   def create_mhp
-    mhp = mhp_params 
-    new_mhp = MentalHealthProfessional.new(mhp)
+    new_mhp = MentalHealthProfessional.new(mhp_params)
     if new_mhp.save
+      set_insurance(new_mhp)
+      set_specialties(new_mhp)
       render status: :created
     else
       render status: :bad_request
     end
   end
-
-  def doctor_params
-    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
-  end
-
-  def mhp_params
-    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
-  end
-
+  
   def set_insurance(professional)
     params[:insurance].each do |insurance|
       i = Insurance.find_or_create_by(company: insurance)
@@ -52,11 +44,24 @@ class Api::V1::AddProfessionalController < ApplicationController
       end
     end
   end
-
+  
   def set_specialties(doctor)
     params[:specialties].each do |specialty|
       i = Specialty.find_or_create_by(name: specialty)
-      DoctorSpecialty.create(doctor_id: doctor.id, specialty_id: i.id)
+      case params[:profession]
+      when 'doctor'
+        DoctorSpecialty.create(doctor_id: doctor.id, specialty_id: i.id)
+      when 'mhp'
+        MhpSpecialty.create(mhp_id: professional.id, specialty_id: i.id)
+      end
     end
+  end
+
+  def doctor_params
+    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
+  end
+
+  def mhp_params
+    params.require(:add_professional).permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
   end
 end
