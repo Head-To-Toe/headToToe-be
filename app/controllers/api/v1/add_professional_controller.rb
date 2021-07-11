@@ -40,19 +40,19 @@ class Api::V1::AddProfessionalController < ApplicationController
       when 'doctor'
         DoctorInsurance.create(doctor_id: professional.id, insurance_id: i.id)
       when 'mhp'
-        MhpInsurance.create(mhp_id: professional.id, insurance_id: i.id)
+        MhpInsurance.create(mental_health_professional_id: professional.id, insurance_id: i.id)
       end
     end
   end
   
-  def set_specialties(doctor)
+  def set_specialties(professional)
     params[:specialties].each do |specialty|
       i = Specialty.find_or_create_by(name: specialty)
       case params[:profession]
       when 'doctor'
-        DoctorSpecialty.create(doctor_id: doctor.id, specialty_id: i.id)
+        DoctorSpecialty.create(doctor_id: professional.id, specialty_id: i.id)
       when 'mhp'
-        MhpSpecialty.create(mhp_id: professional.id, specialty_id: i.id)
+        MhpSpecialty.create(mental_health_professional_id: professional.id, specialty_id: i.id)
       end
     end
   end
