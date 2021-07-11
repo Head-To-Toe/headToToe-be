@@ -1,17 +1,16 @@
 class MedicalProfessionalsFacade
   class << self
-    
     def depict_profession(type, state)
       care_givers = format_doctors(get_all_vetted_doctors(type, state)) if type == 'doctor'
       care_givers = format_mhp(get_all_vetted_mhp(type, state)) if type == 'mhp'
       OpenStruct.new(id: nil, list: care_givers)
     end
 
-    def get_all_vetted_doctors(type, state)
+    def get_all_vetted_doctors(_type, state)
       Doctor.where(vetted: true, state: state)
     end
 
-    def get_all_vetted_mhp(type, state)
+    def get_all_vetted_mhp(_type, state)
       MentalHealthProfessional.where(vetted: true, state: state)
     end
 

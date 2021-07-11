@@ -2,7 +2,7 @@ class MentalHealthProfessional < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :state, presence: true
-  validates :vetted, :inclusion => {:in => [true, false]}
+  validates :vetted, inclusion: { in: [true, false] }
 
   has_many :mhp_insurances
   has_many :mhp_specialties
