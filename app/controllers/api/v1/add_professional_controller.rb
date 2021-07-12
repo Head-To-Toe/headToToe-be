@@ -68,7 +68,7 @@ class Api::V1::AddProfessionalController < ApplicationController
   end
 
   def unauthorized
-    return true if request.headers["api_key"] != 'aidanisthebest'
+    return true if request.headers["api-key"] != 'aidanisthebest'
     false
   end
 end

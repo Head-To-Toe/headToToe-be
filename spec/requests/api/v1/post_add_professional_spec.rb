@@ -23,7 +23,7 @@ RSpec.describe 'POST /add_professional' do
         headers: { 
           "Content-Type": "application/json", 
           "Accept": "application/json",
-          "api_key": "aidanisthebest"
+          "api-key": "aidanisthebest"
         }
     
         expect(response).to be_successful
@@ -67,7 +67,7 @@ RSpec.describe 'POST /add_professional' do
         headers: { 
           "Content-Type": "application/json", 
           "Accept": "application/json",
-          "api_key": "aidanisthebest"
+          "api-key": "aidanisthebest"
         }
     
         expect(response).to be_successful
@@ -115,7 +115,7 @@ RSpec.describe 'POST /add_professional' do
         headers: { 
           "Content-Type": "application/json", 
           "Accept": "application/json",
-          "api_key": "aidanistheworst"
+          "api-key": "aidanistheworst"
         }
     
         expect(response).to_not be_successful
