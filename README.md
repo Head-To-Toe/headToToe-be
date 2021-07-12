@@ -21,14 +21,19 @@ Things you may want to cover:
 
 * Deployment instructions </br>
 
+
+* ...
+
 ## Endpoints
-URL: https://head-to-toe-be.herokuapp.com/api/v1 </br></br>
+### URL: https://head-to-toe-be.herokuapp.com/api/v1 </br>
+
+<hr>
+
+#### GET `/medical_professionals?type=doctor&state=South Dakota`   
 The medical professionals endpoint current has two required parameters: type, and state.  
 The type parameter accepts two values: doctors and mhp ( mental health professionals ).  
 Currently the state parameter only accepts capitalized spelled out states.  
-Example requests:  
 
-GET `/medical_professionals?type=doctor&state=South Dakota`   
 Example response:   
 ```
   {
@@ -115,7 +120,10 @@ Example response:
 }
 ```
 
-GET `/medical_professionals?type=mhp&state=Massachusetts`   
+<hr>
+
+#### GET `/medical_professionals?type=mhp&state=Massachusetts`   
+
 Example response:   
 ```
 {
@@ -185,5 +193,33 @@ Example response:
             ]
         }
     }
+}
+```
+
+<hr>
+
+#### POST /add_professional </br> 
+A successful request will return 201 Created </br> 
+headers:
+```
+"api-key" : "your_api_key",
+"Content-Type": "application/json"`, 
+"Accept": "application/json"
+```
+Example body: ( To add a doctor change the `profession` value to `doctor` and omit the `cost` field )
+```
+{
+    first_name: "FirstName",
+    last_name: "LastName",
+    street: "123 Street",
+    unit: "123 Unit",
+    city: "Denver",
+    state: "Colorado",
+    zip: "12345",
+    phone: "1234567890",
+    cost: "$100-120",
+    profession: "mhp",
+    insurance: ["BigMoney", "OtherBigMoney"],
+    specialties: ["Stuff", "Things", "Problems"]
 }
 ```
