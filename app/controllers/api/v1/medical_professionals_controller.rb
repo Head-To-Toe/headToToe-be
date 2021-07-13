@@ -70,13 +70,11 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
   end
 
   def doctor_params
-    params.require(:add_professional)
-          .permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
+    params.permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)
   end
 
   def mhp_params
-    params.require(:add_professional)
-          .permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
+    params.permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone, :cost)
   end
 
   def unauthorized
