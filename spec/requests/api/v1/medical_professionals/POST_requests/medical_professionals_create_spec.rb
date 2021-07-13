@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'POST /add_professional' do
+RSpec.describe 'POST /medical_professionals' do
   context 'happy path' do
     context 'doctors' do
       it 'creates a new doctor record' do
@@ -18,7 +18,7 @@ RSpec.describe 'POST /add_professional' do
             specialties: ["Stuff", "Things", "Problems"]
         }
     
-        post '/api/v1/add_professional', 
+        post '/api/v1/medical_professionals', 
         params: body.to_json, 
         headers: { 
           "Content-Type": "application/json", 
@@ -62,7 +62,7 @@ RSpec.describe 'POST /add_professional' do
             specialties: ["Stuff", "Things", "Problems"]
         }
     
-        post '/api/v1/add_professional', 
+        post '/api/v1/medical_professionals', 
         params: body.to_json, 
         headers: { 
           "Content-Type": "application/json", 
@@ -110,7 +110,7 @@ RSpec.describe 'POST /add_professional' do
             specialties: ["Stuff", "Things", "Problems"]
         }
     
-        post '/api/v1/add_professional', 
+        post '/api/v1/medical_professionals', 
         params: body.to_json, 
         headers: { 
           "Content-Type": "application/json", 
