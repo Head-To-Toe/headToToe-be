@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :doctor do
     first_name {Faker::Creature::Animal.name}
     last_name {Faker::Games::Pokemon.name}
-    state {'Colorado'}
+    state {['Colorado', 'New York', 'Ohio', 'California'].sample}
     city {Faker::Address.city}
     zip {'19384'}
     street {Faker::Address.street_address}
