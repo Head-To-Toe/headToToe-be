@@ -1,10 +1,10 @@
 class MedicalProfessionalsFacade
   class << self
-
     def get_medical_professionals(type, state)
-      if type == 'doctor'
+      case type
+      when 'doctor'
         care_givers = MedicalProfessionals::IndexService.get_all_vetted_doctors(state)
-      elsif type == 'mhp'
+      when 'mhp'
         care_givers = MedicalProfessionals::IndexService.get_all_vetted_mhps(state)
       end
       OpenStruct.new(id: nil, list: care_givers)

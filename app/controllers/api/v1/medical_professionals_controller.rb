@@ -17,19 +17,20 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     when 'doctor'
       MedicalProfessionalsFacade.create_doctor_records(
         doctor_params, params[:insurance],
-        params[:specialties], params[:profession])
+        params[:specialties], params[:profession]
+      )
 
-        render status: :created
+      render status: :created
     when 'mhp'
       MedicalProfessionalsFacade.create_mhp_records(
         mhp_params, params[:insurance],
-        params[:specialties], params[:profession])
+        params[:specialties], params[:profession]
+      )
 
-        render status: :created
+      render status: :created
     else
-      render status: 422
+      render status: :unprocessable_entity
     end
-
   end
 
   private

@@ -2,16 +2,12 @@ class MedicalProfessionals::IndexService
   class << self
     def get_all_vetted_doctors(state)
       doctors = Doctor.where(vetted: true, state: state)
-      if doctors
-        format_doctors(doctors)
-      end
+      format_doctors(doctors) if doctors
     end
 
     def get_all_vetted_mhps(state)
       mhps = MentalHealthProfessional.where(vetted: true, state: state)
-      if mhps
-        format_mhps(mhps)
-      end
+      format_mhps(mhps) if mhps
     end
 
     def format_doctors(doctors)
