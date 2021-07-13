@@ -3,16 +3,28 @@ class MedicalProfessionals::CreateService
     def create_doctor(doctor_params, insurances, specialties, profession)
       new_doctor = Doctor.new(doctor_params)
       if new_doctor.save
-        add_insurance(new_doctor, insurances, profession)
-        add_specialties(new_doctor, specialties, profession)
+        if insurances && specialties
+          add_insurance(new_doctor, insurances, profession)
+          add_specialties(new_doctor, specialties, profession)
+        elsif insurances
+          add_insurance(new_doctor, insurances, profession)
+        elsif specialties
+          add_specialties(new_doctor, specialties, profession)
+        end
       end
     end
 
     def create_mhp(mhp_params, insurances, specialties, profession)
       new_mhp = MentalHealthProfessional.new(mhp_params)
       if new_mhp.save
-        add_insurance(new_mhp, insurances, profession)
-        add_specialties(new_mhp, specialties, profession)
+        if insurances && specialties
+          add_insurance(new_mhp, insurances, profession)
+          add_specialties(new_mhp, specialties, profession)
+        elsif insurances
+          add_insurance(new_mhp, insurances, profession)
+        elsif specialties
+          add_specialties(new_mhp, specialties, profession)
+        end
       end
     end
 
