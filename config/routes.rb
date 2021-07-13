@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get "/medical_professionals", to: 'medical_professionals#index'
-
-      post "/add_professional", to: 'add_professional#create'
+      resources :medical_professionals, only: [:index, :create]
     end
   end
 end
