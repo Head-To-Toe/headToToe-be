@@ -1,4 +1,4 @@
-class MedicalProfessionalsService
+class MedicalProfessionals::CreateService
   class << self
     def create_doctor(doctor_params, insurances, specialties, profession)
       new_doctor = Doctor.new(doctor_params)

@@ -1,6 +1,6 @@
 class Api::V1::MedicalProfessionalsController < ApplicationController
   def index
-    medical_professionals = MedicalProfessionalsFacade.depict_profession(params[:type], params[:state])
+    medical_professionals = MedicalProfessionalsFacade.get_medical_professionals(params[:type], params[:state])
 
     case params[:type]
     when 'doctor'
