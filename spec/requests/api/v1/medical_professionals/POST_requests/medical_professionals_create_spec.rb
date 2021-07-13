@@ -93,7 +93,7 @@ RSpec.describe 'POST /medical_professionals' do
   end
 
   context 'sad path' do
-    context 'doctors' do
+    context 'professional creation' do
       it 'returns 401 if api key is wrong' do
         body = {
             first_name: "FirstName",
@@ -120,6 +120,33 @@ RSpec.describe 'POST /medical_professionals' do
     
         expect(response).to_not be_successful
         expect(response.status).to eq(401)
+      end
+
+      it 'returns 422 if profession is missing' do
+        body = {
+            first_name: "FirstName",
+            last_name: "LastName",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            cost: "$100-120",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(422)
       end
     end
   end

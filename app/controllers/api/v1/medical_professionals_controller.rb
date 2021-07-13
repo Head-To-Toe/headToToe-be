@@ -21,13 +21,13 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
         render status: :created
     when 'mhp'
-       MedicalProfessionalsFacade.create_mhp_records(
+      MedicalProfessionalsFacade.create_mhp_records(
         mhp_params, params[:insurance],
         params[:specialties], params[:profession])
 
         render status: :created
     else
-      render status: :bad_request
+      render status: 422
     end
 
   end
