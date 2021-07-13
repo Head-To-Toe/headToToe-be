@@ -81,46 +81,6 @@ RSpec.describe 'POST /medical_professionals' do
         expect(doctor.insurances.last.company).to eq("OtherBigMoney")
         expect(doctor.specialties.empty?).to eq(true)
       end
-
-      it 'creates a new doctor record with only specialites' do
-        body = {
-            first_name: "FirstName",
-            last_name: "LastName",
-            street: "123 Street",
-            unit: "123 Unit",
-            city: "Denver",
-            state: "Colorado",
-            zip: "12345",
-            phone: "1234567890",
-            profession: "doctor",
-            specialties: ["Stuff", "Things", "Problems"]
-        }
-    
-        post '/api/v1/medical_professionals', 
-        params: body.to_json, 
-        headers: { 
-          "Content-Type": "application/json", 
-          "Accept": "application/json",
-          "api-key": "aidanisthebest"
-        }
-    
-        expect(response).to be_successful
-        expect(response.status).to eq(201)
-  
-        doctor = Doctor.find_by(first_name: "FirstName")
-  
-        expect(doctor.last_name).to eq('LastName')
-        expect(doctor.street).to eq('123 Street')
-        expect(doctor.unit).to eq('123 Unit')
-        expect(doctor.city).to eq('Denver')
-        expect(doctor.state).to eq('Colorado')
-        expect(doctor.zip).to eq('12345')
-        expect(doctor.phone).to eq('1234567890')
-        expect(doctor.insurances.empty?).to eq(true)
-        expect(doctor.specialties[0].name).to eq("Stuff")
-        expect(doctor.specialties[1].name).to eq("Things")
-        expect(doctor.specialties[2].name).to eq("Problems")
-      end
     end
 
     context 'mental health professionals' do
@@ -208,48 +168,6 @@ RSpec.describe 'POST /medical_professionals' do
         expect(mhp.insurances.last.company).to eq("OtherBigMoney")
         expect(mhp.specialties.empty?).to eq(true)
       end
-
-      it 'creates a new mhp record with only specialties' do
-        body = {
-            first_name: "FirstName",
-            last_name: "LastName",
-            street: "123 Street",
-            unit: "123 Unit",
-            city: "Denver",
-            state: "Colorado",
-            zip: "12345",
-            phone: "1234567890",
-            cost: "$100-120",
-            profession: "mhp",
-            specialties: ["Stuff", "Things", "Problems"]
-        }
-    
-        post '/api/v1/medical_professionals', 
-        params: body.to_json, 
-        headers: { 
-          "Content-Type": "application/json", 
-          "Accept": "application/json",
-          "api-key": "aidanisthebest"
-        }
-    
-        expect(response).to be_successful
-        expect(response.status).to eq(201)
-  
-        mhp = MentalHealthProfessional.find_by(first_name: "FirstName")
-  
-        expect(mhp.last_name).to eq('LastName')
-        expect(mhp.street).to eq('123 Street')
-        expect(mhp.unit).to eq('123 Unit')
-        expect(mhp.city).to eq('Denver')
-        expect(mhp.state).to eq('Colorado')
-        expect(mhp.zip).to eq('12345')
-        expect(mhp.phone).to eq('1234567890')
-        expect(mhp.cost).to eq('$100-120')
-        expect(mhp.insurances.empty?).to eq(true)
-        expect(mhp.specialties[0].name).to eq("Stuff")
-        expect(mhp.specialties[1].name).to eq("Things")
-        expect(mhp.specialties[2].name).to eq("Problems")
-      end
     end
   end
 
@@ -295,6 +213,114 @@ RSpec.describe 'POST /medical_professionals' do
             phone: "1234567890",
             cost: "$100-120",
             insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns 422 if profession is not doctor or mhp' do
+        body = {
+            first_name: "FirstName",
+            last_name: "LastName",
+            profession: "random",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            cost: "$100-120",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns 422 if first_name is missing' do
+        body = {
+            last_name: "LastName",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            profession: "mhp",
+            cost: "$100-120",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns 422 if last_name is missing' do
+        body = {
+            first_name: "FirstName",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            profession: "mhp",
+            cost: "$100-120",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+    
+        expect(response).to_not be_successful
+        expect(response.status).to eq(422)
+      end
+      it 'returns 422 if insurance is missing' do
+        body = {
+            first_name: "FirstName",
+            last_name: "LastName",
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            profession: "mhp",
+            cost: "$100-120",
             specialties: ["Stuff", "Things", "Problems"]
         }
     
