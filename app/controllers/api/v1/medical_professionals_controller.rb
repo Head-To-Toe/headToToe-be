@@ -15,59 +15,24 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
     case params[:profession]
     when 'doctor'
-      create_doctor
+      MedicalProfessionalsFacade.create_doctor_records(
+        doctor_params, params[:insurance],
+        params[:specialties], params[:profession])
+
+        render status: :created
     when 'mhp'
-      create_mhp
+       MedicalProfessionalsFacade.create_mhp_records(
+        mhp_params, params[:insurance],
+        params[:specialties], params[:profession])
+
+        render status: :created
+    else
+      render status: :bad_request
     end
+
   end
 
   private
-
-  def create_doctor
-    new_doctor = Doctor.new(doctor_params)
-    if new_doctor.save
-      add_insurance(new_doctor)
-      add_specialties(new_doctor)
-      render status: :created
-    else
-      render status: :bad_request
-    end
-  end
-
-  def create_mhp
-    new_mhp = MentalHealthProfessional.new(mhp_params)
-    if new_mhp.save
-      add_insurance(new_mhp)
-      add_specialties(new_mhp)
-      render status: :created
-    else
-      render status: :bad_request
-    end
-  end
-
-  def add_insurance(professional)
-    params[:insurance].each do |insurance|
-      i = Insurance.find_or_create_by(company: insurance)
-      case params[:profession]
-      when 'doctor'
-        DoctorInsurance.create(doctor_id: professional.id, insurance_id: i.id)
-      when 'mhp'
-        MhpInsurance.create(mental_health_professional_id: professional.id, insurance_id: i.id)
-      end
-    end
-  end
-
-  def add_specialties(professional)
-    params[:specialties].each do |specialty|
-      i = Specialty.find_or_create_by(name: specialty)
-      case params[:profession]
-      when 'doctor'
-        DoctorSpecialty.create(doctor_id: professional.id, specialty_id: i.id)
-      when 'mhp'
-        MhpSpecialty.create(mental_health_professional_id: professional.id, specialty_id: i.id)
-      end
-    end
-  end
 
   def doctor_params
     params.permit(:first_name, :last_name, :street, :unit, :city, :state, :zip, :phone)

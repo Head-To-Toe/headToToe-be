@@ -52,5 +52,13 @@ class MedicalProfessionalsFacade
         }
       end
     end
+
+    def create_doctor_records(doctor_params, insurances, specialties, profession)
+      MedicalProfessionalsService.create_doctor(doctor_params, insurances, specialties, profession)
+    end
+
+    def create_mhp_records(mhp_params, insurances, specialties, profession)
+      MedicalProfessionalsService.create_mhp(mhp_params, insurances, specialties, profession)
+    end
   end
 end
