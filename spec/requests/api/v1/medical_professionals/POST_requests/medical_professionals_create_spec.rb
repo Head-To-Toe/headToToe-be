@@ -40,9 +40,7 @@ RSpec.describe 'POST /medical_professionals' do
         expect(doctor.phone).to eq('1234567890')
         expect(doctor.insurances.first.company).to eq("BigMoney")
         expect(doctor.insurances.last.company).to eq("OtherBigMoney")
-        expect(doctor.specialties[0].name).to eq("Stuff")
-        expect(doctor.specialties[1].name).to eq("Things")
-        expect(doctor.specialties[2].name).to eq("Problems")
+        expect(doctor.specialties.pluck(:name)).to contain_exactly("Stuff", "Things", "Problems")
       end
 
       it 'creates a new doctor record with only insurances' do
