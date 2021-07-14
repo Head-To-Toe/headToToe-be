@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "medical professional requests" do
+RSpec.describe "GET /medical_professionals" do
   context 'happy path' do
     it "returns all doctor json objects" do
       doctors               = create_list(:doctor, 20, vetted: true)
