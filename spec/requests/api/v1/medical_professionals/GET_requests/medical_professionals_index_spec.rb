@@ -3,10 +3,10 @@ require 'rails_helper'
 describe "medical professional requests" do
   context 'happy path' do
     it "returns all doctor json objects" do
-      doctors               = create_list(:doctor, 20, vetted: true)
+      doctors            = create_list(:doctor, 20, vetted: true)
 
-      insurances            = create_list(:insurance, 10)
-      specialties           = create_list(:specialty, 10)
+      insurances         = create_list(:insurance, 10)
+      specialties        = create_list(:specialty, 10)
 
       doctor_insurances  = create_list(:doctor_insurance, 10, doctor: doctors.sample, insurance: insurances.sample)
       doctor_specialties = create_list(:doctor_specialty, 10, doctor: doctors.sample, specialty: specialties.sample)
@@ -215,41 +215,82 @@ describe "medical professional requests" do
       end
     end
 
-    it 'returns all unvetted resources if vetted=false' do 
-            doctors               = create_list(:doctor, 20, vetted: true)
+    it 'returns all unvetted professionals if vetted=false & no other params' do 
+      doctors            = create_list(:doctor, 10, vetted: false)
+      mhps               = create_list(:mental_health_professional, 10, vetted: false)
 
-      insurances            = create_list(:insurance, 10)
-      specialties           = create_list(:specialty, 10)
+      insurances         = create_list(:insurance, 10)
+      specialties        = create_list(:specialty, 10)
 
       doctor_insurances  = create_list(:doctor_insurance, 10, doctor: doctors.sample, insurance: insurances.sample)
       doctor_specialties = create_list(:doctor_specialty, 10, doctor: doctors.sample, specialty: specialties.sample)
+
+      mhp_insurances  = create_list(:mhp_insurance, 10, mental_health_professional: mhps.sample, insurance: insurances.sample)
+      mhp_specialties = create_list(:mhp_specialty, 10, mental_health_professional: mhps.sample, specialty: specialties.sample)
 
       get '/api/v1/medical_professionals', params: {vetted: false}
       
       expect(response).to be_successful
       expect(response.status).to eq(200)
       
-      doctors = JSON.parse(response.body, symbolize_names: true)
+      unvetted_pros = JSON.parse(response.body, symbolize_names: true)
       
-      expect(doctors).to have_key(:data)
-      expect(doctors[:data].count).to eq(3)
-      expect(doctors[:data]).to be_a(Hash)
+      expect(unvetted_pros).to have_key(:data)
+      expect(unvetted_pros[:data].count).to eq(3)
+      expect(unvetted_pros[:data]).to be_a(Hash)
 
-      expect(doctors[:data]).to have_key(:id)
-      expect(doctors[:data][:id]).to eq(nil)
+      expect(unvetted_pros[:data]).to have_key(:id)
+      expect(unvetted_pros[:data][:id]).to eq(nil)
+      
+      expect(unvetted_pros[:data]).to have_key(:type)
+      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
 
-      expect(doctors[:data]).to have_key(:type)
-      expect(doctors[:data][:type]).to eq('unvetted_resources')
+      expect(unvetted_pros[:data]).to have_key(:attributes)
+      expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
+      expect(unvetted_pros[:data][:attributes].keys).to eq([:doctors, :mhps])
 
-      expect(doctors[:data]).to have_key(:attributes)
-      expect(doctors[:data][:attributes]).to be_a(Hash)
-      expect(doctors[:data][:attributes]).to have_key(:list)
+      expect(unvetted_pros[:data][:attributes][:doctors]).to be_an(Array)
+      expect(unvetted_pros[:data][:attributes][:mhps]).to be_an(Array)
+      
+      expect(unvetted_pros[:data][:attributes][:doctors].count).to eq(10)
+      expect(unvetted_pros[:data][:attributes][:mhps].count).to eq(10)
 
-      expect(doctors[:data][:attributes][:list]).to be_an(Array)
+      unvetted_pros[:data][:attributes][:doctors].each do |unvetted|
+        expect(unvetted).to have_key(:id)
+        expect(unvetted[:id]).to be_an(Integer)
 
-      expect(doctors[:data][:attributes][:list].count).to eq(20)
+        expect(unvetted).to have_key(:first_name)
+        expect(unvetted[:first_name]).to be_a(String)
 
-      doctors[:data][:attributes][:list].each do |unvetted|
+        expect(unvetted).to have_key(:state)
+        expect(unvetted[:state]).to be_a(String)
+
+        expect(unvetted).to have_key(:city)
+        expect(unvetted[:city]).to be_a(String)
+
+        expect(unvetted).to have_key(:street)
+        expect(unvetted[:street]).to be_a(String)
+
+        expect(unvetted).to have_key(:unit)
+        expect(unvetted[:unit]).to be_a(String)
+
+        expect(unvetted).to have_key(:zip)
+        expect(unvetted[:zip]).to be_a(String)
+
+        expect(unvetted).to have_key(:phone)
+        expect(unvetted[:phone]).to be_a(String)
+
+        expect(unvetted).to have_key(:vetted)
+        expect(unvetted[:vetted]).to eq(false)
+
+        expect(unvetted).to have_key(:specialties)
+        expect(unvetted[:specialties]).to be_an(Array)
+
+        expect(unvetted).to have_key(:insurances)
+        expect(unvetted[:insurances]).to be_an(Array)
+      end
+
+      unvetted_pros[:data][:attributes][:mhps].each do |unvetted|
         expect(unvetted).to have_key(:id)
         expect(unvetted[:id]).to be_an(Integer)
 
@@ -284,8 +325,6 @@ describe "medical professional requests" do
         expect(unvetted[:insurances]).to be_an(Array)
       end
     end
-
-    it 'does not require the type param'
   end
 
   # it "returns a subset of items based on desired page number" do
