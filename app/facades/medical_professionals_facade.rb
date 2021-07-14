@@ -21,5 +21,9 @@ class MedicalProfessionalsFacade
     def update_doctor_or_mhp_record(first_name, last_name)
       MedicalProfessionals::UpdateService.update_doctor_or_mhp(first_name, last_name)
     end
+
+    def delete_doctor_or_mhp_record(first_name, last_name)
+      MedicalProfessionals::DeleteService.delete_doctor_or_mhp(first_name, last_name)
+    end
   end
 end

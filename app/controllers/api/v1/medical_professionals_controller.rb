@@ -49,6 +49,16 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     render status: :not_found unless completed_update
   end
 
+  def destroy
+    return render status: :unauthorized if unauthorized
+    return render status: :unprocessable_entity unless params[:medical_professional][:id] &&
+                                                       params[:first_name] && params[:last_name]
+
+    completed_delete = MedicalProfessionalsFacade.delete_doctor_or_mhp_record(params[:first_name], params[:last_name])
+
+    render status: :not_found unless completed_delete
+  end
+
   private
 
   def doctor_params
