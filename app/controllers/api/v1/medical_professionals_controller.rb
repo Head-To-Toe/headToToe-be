@@ -37,7 +37,23 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     else
       render status: :unprocessable_entity
     end
+  end
 
+  def update
+    return render status: :unauthorized if unauthorized
+    return render status: :unprocessable_entity unless params[:medical_professional][:id] && 
+    params[:first_name] && params[:last_name]
+
+    doctor = Doctor.find_by(first_name: params[:first_name], last_name: params[:last_name])
+    mhp = MentalHealthProfessional.find_by(first_name: params[:first_name], last_name: params[:last_name])
+
+    if doctor
+      doctor.update(vetted: true)
+    elsif mhp
+      mhp.update(vetted: true)
+    else
+      render status: :not_found
+    end
   end
 
   private
