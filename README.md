@@ -199,7 +199,7 @@ Example response:
 <hr>
 
 #### POST `/medical_professionals` </br> 
-A successful request will return 201 Created </br> 
+A successful create request will return 201 Created </br> 
 A request missing required params will return 422 Unprocessable Entity </br> 
 A request missing an api key will return 401 Unauthorized </br> 
 
@@ -225,5 +225,28 @@ Example body: ( To add a doctor change the `profession` value to `doctor` and om
     profession: "mhp",
     insurance: ["BigMoney", "OtherBigMoney"],
     specialties: ["Stuff", "Things", "Problems"]
+}
+```
+
+<hr>
+
+#### PATCH and DELETE `/medical_professionals/#id` </br> 
+A successful update request will return 204 No Content </br> 
+A request missing required params will return 422 Unprocessable Entity </br> 
+A request missing an api key will return 401 Unauthorized </br> 
+
+headers:
+```
+"api-key" : "your_api_key",
+"Content-Type": "application/json"`, 
+"Accept": "application/json"
+```
+Required params: "id", "first_name", and "last_name"
+Example body:
+```
+{
+    "id": "1",
+    "first_name": "cicada",
+    "last_name": "Charizard"
 }
 ```
