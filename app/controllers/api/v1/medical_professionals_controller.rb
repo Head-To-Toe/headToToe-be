@@ -44,14 +44,9 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     return render status: :unprocessable_entity unless params[:medical_professional][:id] &&
                                                        params[:first_name] && params[:last_name]
 
-    doctor = Doctor.find_by(first_name: params[:first_name], last_name: params[:last_name])
-    mhp = MentalHealthProfessional.find_by(first_name: params[:first_name], last_name: params[:last_name])
+    completed_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:first_name], params[:last_name])
 
-    if doctor
-      doctor.update(vetted: true)
-    elsif mhp
-      mhp.update(vetted: true)
-    else
+    unless completed_update
       render status: :not_found
     end
   end
