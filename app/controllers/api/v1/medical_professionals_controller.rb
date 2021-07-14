@@ -12,24 +12,24 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def create
     return render status: :unauthorized if unauthorized
-    
-    if params[:profession].present? && params[:first_name].present? && 
-      params[:last_name].present?   && params[:insurance].present?  &&
-      params[:state].present?
+
+    if params[:profession].present? && params[:first_name].present? &&
+       params[:last_name].present? && params[:insurance].present? &&
+       params[:state].present?
       case params[:profession]
       when 'doctor'
         MedicalProfessionalsFacade.create_doctor_records(
           doctor_params, params[:insurance],
           params[:specialties], params[:profession]
         )
-  
+
         render status: :created
       when 'mhp'
         MedicalProfessionalsFacade.create_mhp_records(
           mhp_params, params[:insurance],
           params[:specialties], params[:profession]
         )
-  
+
         render status: :created
       else
         render status: :unprocessable_entity
@@ -41,8 +41,8 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def update
     return render status: :unauthorized if unauthorized
-    return render status: :unprocessable_entity unless params[:medical_professional][:id] && 
-    params[:first_name] && params[:last_name]
+    return render status: :unprocessable_entity unless params[:medical_professional][:id] &&
+                                                       params[:first_name] && params[:last_name]
 
     doctor = Doctor.find_by(first_name: params[:first_name], last_name: params[:last_name])
     mhp = MentalHealthProfessional.find_by(first_name: params[:first_name], last_name: params[:last_name])
