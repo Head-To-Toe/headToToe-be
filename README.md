@@ -230,7 +230,7 @@ Example body: ( To add a doctor change the `profession` value to `doctor` and om
 
 <hr>
 
-#### PATCH `/medical_professionals/#id` </br> 
+#### PATCH and DELETE `/medical_professionals/#id` </br> 
 A successful update request will return 204 No Content </br> 
 A request missing required params will return 422 Unprocessable Entity </br> 
 A request missing an api key will return 401 Unauthorized </br> 
