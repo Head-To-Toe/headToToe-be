@@ -23,7 +23,7 @@ class MedicalProfessionals::IndexService
       if params[:state].nil?
         mhps = MentalHealthProfessional.where(vetted: false)
       elsif params[:state].present?
-        mhp = MentalHealthProfessional.where(vetted: false, state: params[:state])
+        mhps = MentalHealthProfessional.where(vetted: false, state: params[:state])
       end
       format_mhps(mhps) if mhps
     end
