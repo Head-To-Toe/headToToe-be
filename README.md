@@ -198,14 +198,18 @@ Example response:
 
 <hr>
 
-#### POST /add_professional </br> 
+#### POST `/medical_professionals` </br> 
 A successful request will return 201 Created </br> 
+A request missing required params will return 422 Unprocessable Entity </br> 
+A request missing an api key will return 401 Unauthorized </br> 
+
 headers:
 ```
 "api-key" : "your_api_key",
 "Content-Type": "application/json"`, 
 "Accept": "application/json"
 ```
+Required params: "first_name", "last_name", "profession", and "insurance"
 Example body: ( To add a doctor change the `profession` value to `doctor` and omit the `cost` field )
 ```
 {

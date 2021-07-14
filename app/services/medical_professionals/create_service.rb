@@ -8,8 +8,6 @@ class MedicalProfessionals::CreateService
           add_specialties(new_doctor, specialties, profession)
         elsif insurances
           add_insurance(new_doctor, insurances, profession)
-        elsif specialties
-          add_specialties(new_doctor, specialties, profession)
         end
       end
     end
@@ -22,8 +20,6 @@ class MedicalProfessionals::CreateService
           add_specialties(new_mhp, specialties, profession)
         elsif insurances
           add_insurance(new_mhp, insurances, profession)
-        elsif specialties
-          add_specialties(new_mhp, specialties, profession)
         end
       end
     end

@@ -17,25 +17,32 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def create
     return render status: :unauthorized if unauthorized
-
-    case params[:profession]
-    when 'doctor'
-      MedicalProfessionalsFacade.create_doctor_records(
-        doctor_params, params[:insurance],
-        params[:specialties], params[:profession]
-      )
-
-      render status: :created
-    when 'mhp'
-      MedicalProfessionalsFacade.create_mhp_records(
-        mhp_params, params[:insurance],
-        params[:specialties], params[:profession]
-      )
-
-      render status: :created
+    
+    if params[:profession].present? && params[:first_name].present? && 
+      params[:last_name].present?   && params[:insurance].present?  &&
+      params[:state].present?
+      case params[:profession]
+      when 'doctor'
+        MedicalProfessionalsFacade.create_doctor_records(
+          doctor_params, params[:insurance],
+          params[:specialties], params[:profession]
+        )
+  
+        render status: :created
+      when 'mhp'
+        MedicalProfessionalsFacade.create_mhp_records(
+          mhp_params, params[:insurance],
+          params[:specialties], params[:profession]
+        )
+  
+        render status: :created
+      else
+        render status: :unprocessable_entity
+      end
     else
       render status: :unprocessable_entity
     end
+
   end
 
   private
