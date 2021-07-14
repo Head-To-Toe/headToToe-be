@@ -27,8 +27,13 @@ class MedicalProfessionalsFacade
       end
     end
 
-    def delete_doctor_or_mhp_record(first_name, last_name)
-      MedicalProfessionals::DeleteService.delete_doctor_or_mhp(first_name, last_name)
+    def delete_doctor_or_mhp_record(id, profession)
+      case profession
+      when 'doctor'
+        MedicalProfessionals::DeleteService.delete_doctor(id)
+      when 'mhp'
+        MedicalProfessionals::DeleteService.delete_mhp(id)
+      end
     end
   end
 end

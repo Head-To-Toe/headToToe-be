@@ -9,9 +9,7 @@ RSpec.describe 'DELETE /medical_professionals' do
         expect(doctor.present?).to eq(true)
 
         body = {
-            id: doctor.id,
-            first_name: doctor.first_name,
-            last_name: doctor.last_name
+            profession: 'doctor'
         }
     
         delete "/api/v1/medical_professionals/#{doctor.id}", 
@@ -36,9 +34,7 @@ RSpec.describe 'DELETE /medical_professionals' do
         expect(mhp.present?).to eq(true)
 
         body = {
-            id: mhp.id,
-            first_name: mhp.first_name,
-            last_name: mhp.last_name
+            profession: 'mhp'
         }
     
         delete "/api/v1/medical_professionals/#{mhp.id}", 
@@ -63,9 +59,7 @@ RSpec.describe 'DELETE /medical_professionals' do
         doctor = create :doctor, vetted: false
 
         body = {
-            id: doctor.id,
-            first_name: doctor.first_name,
-            last_name: doctor.last_name,
+            profession: 'doctor'
         }
     
         delete "/api/v1/medical_professionals/#{doctor.id}", 
@@ -79,16 +73,33 @@ RSpec.describe 'DELETE /medical_professionals' do
         expect(response.status).to eq(401)
       end
 
-      it "returns 404 if no doctor or mhp are found from passed first_name and last_name" do
+      it "returns 404 if no doctor is found from passed id" do
         doctor = create :doctor, vetted: false
 
         body = {
-            id: 'random id',
-            first_name: 'firstname',
-            last_name: 'lastname'
+            profession: 'doctor'
         }
     
-        delete "/api/v1/medical_professionals/#{doctor.id}", 
+        delete "/api/v1/medical_professionals/1", 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+        
+        expect(response).to_not be_successful
+        expect(response.status).to eq(404)
+      end
+
+      it "returns 404 if no mental health professional is found from passed id" do
+        mhp = create :mental_health_professional, vetted: false
+
+        body = {
+            profession: 'mhp'
+        }
+    
+        delete "/api/v1/medical_professionals/1", 
         params: body.to_json, 
         headers: { 
           "Content-Type": "application/json", 
@@ -101,56 +112,10 @@ RSpec.describe 'DELETE /medical_professionals' do
       end
 
       context 'missing params' do
-        it "returns 422 if id is missing from request params" do
+        it "returns 422 if profession is missing from request params" do
           doctor = create :doctor, vetted: false
-
-          body = {
-              first_name: 'firstname',
-              last_name: 'lastname'
-          }
       
           delete "/api/v1/medical_professionals/#{doctor.id}", 
-          params: body.to_json, 
-          headers: { 
-            "Content-Type": "application/json", 
-            "Accept": "application/json",
-            "api-key": "aidanisthebest"
-          }
-          
-          expect(response).to_not be_successful
-          expect(response.status).to eq(422)
-        end
-
-        it "returns 422 if first_name is missing from request params" do
-          doctor = create :doctor, vetted: false
-
-          body = {
-              id: 'random id',
-              last_name: 'lastname'
-          }
-      
-          delete "/api/v1/medical_professionals/#{doctor.id}", 
-          params: body.to_json, 
-          headers: { 
-            "Content-Type": "application/json", 
-            "Accept": "application/json",
-            "api-key": "aidanisthebest"
-          }
-          
-          expect(response).to_not be_successful
-          expect(response.status).to eq(422)
-        end
-
-        it "returns 422 if last_name is missing from request params" do
-          doctor = create :doctor, vetted: false
-
-          body = {
-              id: 'random id',
-              first_name: 'firstname'
-          }
-      
-          delete "/api/v1/medical_professionals/#{doctor.id}", 
-          params: body.to_json, 
           headers: { 
             "Content-Type": "application/json", 
             "Accept": "application/json",
