@@ -1,13 +1,22 @@
 class MedicalProfessionals::UpdateService
   class << self
-    def update_doctor_or_mhp(first_name, last_name)
-      doctor = Doctor.find_by(first_name: first_name, last_name: last_name)
-      mhp = MentalHealthProfessional.find_by(first_name: first_name, last_name: last_name)
+    def update_doctor(id)
+      doctor = Doctor.find_by(id: id)
 
       if doctor
         doctor.update(vetted: true)
-      elsif mhp
+      else
+        false
+      end
+    end
+
+    def update_mhp(id)
+      mhp = MentalHealthProfessional.find_by(id: id)
+
+      if mhp
         mhp.update(vetted: true)
+      else
+        false
       end
     end
   end

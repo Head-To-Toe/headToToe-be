@@ -41,12 +41,11 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def update
     return render status: :unauthorized if unauthorized
-    return render status: :unprocessable_entity unless params[:medical_professional][:id] &&
-                                                       params[:first_name] && params[:last_name]
+    return render status: :unprocessable_entity unless params[:id] && params[:profession]
+    return render status: :not_found unless params[:profession] == 'doctor' || params[:profession] == 'mhp'
 
-    completed_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:first_name], params[:last_name])
-
-    render status: :not_found unless completed_update
+    mhp = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:id], params[:profession])
+    return render status: :not_found unless mhp
   end
 
   private
