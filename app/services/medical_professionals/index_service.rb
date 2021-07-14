@@ -10,6 +10,24 @@ class MedicalProfessionals::IndexService
       format_mhps(mhps) if mhps
     end
 
+    def get_unvetted_doctors(params)
+      if params[:state].nil?
+        doctors = Doctor.where(vetted: false)
+      elsif params[:state].present?
+        doctors = Doctor.where(vetted: false, state: params[:state])
+      end
+      format_doctors(doctors) if doctors
+    end
+
+    def get_unvetted_mhps(params)
+      if params[:state].nil?
+        mhps = MentalHealthProfessional.where(vetted: false)
+      elsif params[:state].present?
+        mhp = MentalHealthProfessional.where(vetted: false, state: params[:state])
+      end
+      format_mhps(mhps) if mhps
+    end
+
     def format_doctors(doctors)
       doctors.map do |doctor|
         {
