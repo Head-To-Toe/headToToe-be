@@ -17,5 +17,9 @@ class MedicalProfessionalsFacade
     def create_mhp_records(mhp_params, insurances, specialties, profession)
       MedicalProfessionals::CreateService.create_mhp(mhp_params, insurances, specialties, profession)
     end
+    
+    def update_doctor_or_mhp_record(first_name, last_name)
+      MedicalProfessionals::UpdateService.update_doctor_or_mhp(first_name, last_name)
+    end
   end
 end
