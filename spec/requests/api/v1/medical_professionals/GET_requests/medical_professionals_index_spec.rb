@@ -145,11 +145,11 @@ describe "medical professional requests" do
       end
     end
 
-    xit 'does not require the state param, returns all vetted resources' do 
-      doctors               = create_list(:doctor, 20, vetted: true)
+    it 'does not require the state param, returns all vetted resources' do 
+      doctors            = create_list(:doctor, 20, vetted: true)
 
-      insurances            = create_list(:insurance, 10)
-      specialties           = create_list(:specialty, 10)
+      insurances         = create_list(:insurance, 10)
+      specialties        = create_list(:specialty, 10)
 
       doctor_insurances  = create_list(:doctor_insurance, 10, doctor: doctors.sample, insurance: insurances.sample)
       doctor_specialties = create_list(:doctor_specialty, 10, doctor: doctors.sample, specialty: specialties.sample)

@@ -1,12 +1,20 @@
 class MedicalProfessionals::IndexService
   class << self
     def get_all_vetted_doctors(params)
-      doctors = Doctor.where(vetted: true, state: params[:state])
+      if params[:state].nil?
+        doctors = Doctor.where(vetted: true)
+      elsif params[:state].present?
+        doctors = Doctor.where(vetted: true, state: params[:state])
+      end
       format_doctors(doctors) if doctors
     end
 
     def get_all_vetted_mhps(params)
-      mhps = MentalHealthProfessional.where(vetted: true, state: params[:state])
+      if params[:state].nil?
+        mhps = MentalHealthProfessional.where(vetted: true)
+      elsif params[:state].present?
+        mhps = MentalHealthProfessional.where(vetted: true, state: params[:state])
+      end
       format_mhps(mhps) if mhps
     end
 
