@@ -46,9 +46,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
     completed_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:first_name], params[:last_name])
 
-    unless completed_update
-      render status: :not_found
-    end
+    render status: :not_found unless completed_update
   end
 
   private
