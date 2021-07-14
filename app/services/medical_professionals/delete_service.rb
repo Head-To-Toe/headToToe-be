@@ -1,13 +1,22 @@
 class MedicalProfessionals::DeleteService
   class << self
-    def delete_doctor_or_mhp(first_name, last_name)
-      doctor = Doctor.find_by(first_name: first_name, last_name: last_name)
-      mhp = MentalHealthProfessional.find_by(first_name: first_name, last_name: last_name)
+    def delete_doctor(id)
+      doctor = Doctor.find_by(id: id)
 
       if doctor
         doctor.delete
-      elsif mhp
+      else
+        false
+      end
+    end
+
+    def delete_mhp(id)
+      mhp = MentalHealthProfessional.find_by(id: id)
+
+      if mhp
         mhp.delete
+      else
+        false
       end
     end
   end
