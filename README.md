@@ -241,12 +241,10 @@ headers:
 "Content-Type": "application/json"`, 
 "Accept": "application/json"
 ```
-Required params: "id", "first_name", and "last_name"
+Required params: "id", "profession"
 Example body:
 ```
 {
-    "id": "1",
-    "first_name": "cicada",
-    "last_name": "Charizard"
+    "profession": "doctor"
 }
 ```
