@@ -42,7 +42,7 @@ module HeadToToeBe
         { method: "POST", limit: 6 },
         { method: "PATCH", limit: 10 },
         { method: "DELETE", limit: 30 },
-        { method: "GET", path: "/medical_professionals", limit: 600}
+        { method: "GET", path: "/medical_professionals", limit: 60}
       ]
   
       config.middleware.use Rack::Throttle::Rules, rules: rules, time_window: :minute
