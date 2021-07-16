@@ -128,6 +128,9 @@ GEM
       rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack-throttle (0.7.0)
+      bundler (>= 1.0.0)
+      rack (>= 1.0.0)
     rails (6.1.4)
       actioncable (= 6.1.4)
       actionmailbox (= 6.1.4)
@@ -235,6 +238,7 @@ DEPENDENCIES
   pry
   puma (~> 5.0)
   rack-cors
+  rack-throttle
   rails (~> 6.1.4)
   rspec-rails
   rubocop-rails

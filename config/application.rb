@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require 'rack/throttle'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -36,14 +37,15 @@ module HeadToToeBe
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-
-    rules = [
-      { method: "POST", limit: 6 },
-      { method: "PATCH", limit: 10 },
-      { method: "DELETE", limit: 30 },
-      { method: "GET", path: "/medical_professionals", limit: 600}
-    ]
-
-    config.middleware.use Rack::Throttle::Rules, rules: rules, time_window: :minute
+    if !Rails.env.test?
+      rules = [
+        { method: "POST", limit: 6 },
+        { method: "PATCH", limit: 10 },
+        { method: "DELETE", limit: 30 },
+        { method: "GET", path: "/medical_professionals", limit: 600}
+      ]
+  
+      config.middleware.use Rack::Throttle::Rules, rules: rules, time_window: :minute
+    end
   end
 end
