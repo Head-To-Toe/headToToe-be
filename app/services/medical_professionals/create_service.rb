@@ -5,12 +5,10 @@ class MedicalProfessionals::CreateService
         first_name: doctor_params[:first_name],
         last_name: doctor_params[:last_name]
       )
-      if existing_doctor
-        return false
-      else
-        new_doctor = Doctor.new(doctor_params)
-        new_doctor.save
-      end
+      return false if existing_doctor
+
+      new_doctor = Doctor.new(doctor_params)
+      new_doctor.save
 
       add_insurance(new_doctor, insurances, profession) if insurances
       add_specialties(new_doctor, specialties, profession) if specialties
@@ -23,12 +21,10 @@ class MedicalProfessionals::CreateService
         last_name: mhp_params[:last_name]
       )
 
-      if existing_mhp
-        return false
-      else
-        new_mhp = MentalHealthProfessional.new(mhp_params)
-        new_mhp.save
-      end
+      return false if existing_mhp
+
+      new_mhp = MentalHealthProfessional.new(mhp_params)
+      new_mhp.save
 
       add_insurance(new_mhp, insurances, profession) if insurances
       add_specialties(new_mhp, specialties, profession) if specialties
