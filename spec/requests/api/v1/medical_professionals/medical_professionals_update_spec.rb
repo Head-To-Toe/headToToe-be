@@ -90,7 +90,6 @@ RSpec.describe 'PATCH /medical_professionals' do
           "api-key": "aidanisthebest"
         }
         
-        # binding.pry
         expect(response).to_not be_successful
         expect(response.status).to eq(404)
       end
