@@ -36,5 +36,14 @@ module HeadToToeBe
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    rules = [
+      { method: "POST", limit: 6 },
+      { method: "PATCH", limit: 10 },
+      { method: "DELETE", limit: 30 },
+      { method: "GET", path: "/medical_professionals", limit: 600}
+    ]
+
+    config.middleware.use Rack::Throttle::Rules, rules: rules, time_window: :minute
   end
 end
