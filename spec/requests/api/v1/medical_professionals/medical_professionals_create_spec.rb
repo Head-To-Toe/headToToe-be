@@ -335,6 +335,64 @@ RSpec.describe 'POST /medical_professionals' do
         expect(response).to_not be_successful
         expect(response.status).to eq(422)
       end
+
+      it 'returns 409 if doctor already exists' do
+        doctor = create :doctor
+        body = {
+            first_name: doctor.first_name,
+            last_name: doctor.last_name,
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            cost: "$100-120",
+            profession: "doctor",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+        
+        expect(response).to_not be_successful
+        expect(response.status).to eq(409)
+      end
+
+      it 'returns 409 if mhp already exists' do
+        mhp = create :mental_health_professional
+        body = {
+            first_name: mhp.first_name,
+            last_name: mhp.last_name,
+            street: "123 Street",
+            unit: "123 Unit",
+            city: "Denver",
+            state: "Colorado",
+            zip: "12345",
+            phone: "1234567890",
+            cost: "$100-120",
+            profession: "mhp",
+            insurance: ["BigMoney", "OtherBigMoney"],
+            specialties: ["Stuff", "Things", "Problems"]
+        }
+    
+        post '/api/v1/medical_professionals', 
+        params: body.to_json, 
+        headers: { 
+          "Content-Type": "application/json", 
+          "Accept": "application/json",
+          "api-key": "aidanisthebest"
+        }
+        
+        expect(response).to_not be_successful
+        expect(response.status).to eq(409)
+      end
     end
   end
 end
