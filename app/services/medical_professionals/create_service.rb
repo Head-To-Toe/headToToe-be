@@ -1,27 +1,38 @@
 class MedicalProfessionals::CreateService
   class << self
     def create_doctor(doctor_params, insurances, specialties, profession)
-      new_doctor = Doctor.new(doctor_params)
-      if new_doctor.save
-        if insurances && specialties
-          add_insurance(new_doctor, insurances, profession)
-          add_specialties(new_doctor, specialties, profession)
-        elsif insurances
-          add_insurance(new_doctor, insurances, profession)
-        end
+      existing_doctor = Doctor.find_by(
+        first_name: doctor_params[:first_name], 
+        last_name: doctor_params[:last_name]
+      )
+      unless existing_doctor
+        new_doctor = Doctor.new(doctor_params)
+        new_doctor.save
+      else
+        return false
       end
+        
+      add_insurance(new_doctor, insurances, profession) if insurances
+      add_specialties(new_doctor, specialties, profession) if specialties
+      new_doctor
     end
 
     def create_mhp(mhp_params, insurances, specialties, profession)
-      new_mhp = MentalHealthProfessional.new(mhp_params)
-      if new_mhp.save
-        if insurances && specialties
-          add_insurance(new_mhp, insurances, profession)
-          add_specialties(new_mhp, specialties, profession)
-        elsif insurances
-          add_insurance(new_mhp, insurances, profession)
-        end
+      existing_mhp = MentalHealthProfessional.find_by(
+        first_name: mhp_params[:first_name], 
+        last_name: mhp_params[:last_name]
+      )
+
+      unless existing_mhp
+        new_mhp = MentalHealthProfessional.new(mhp_params)
+        new_mhp.save
+      else
+        return false 
       end
+      
+      add_insurance(new_mhp, insurances, profession) if insurances
+      add_specialties(new_mhp, specialties, profession) if specialties
+      new_mhp
     end
 
     def add_insurance(professional, insurances, profession)
