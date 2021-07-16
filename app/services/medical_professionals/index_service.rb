@@ -1,38 +1,22 @@
 class MedicalProfessionals::IndexService
   class << self
     def get_all_vetted_doctors(params)
-      if params[:state].nil?
-        doctors = Doctor.where(vetted: true)
-      elsif params[:state].present?
-        doctors = Doctor.where(vetted: true, state: params[:state])
-      end
+      doctors = params[:state] ? Doctor.where(vetted: true, state: params[:state]) : Doctor.where(vetted: true)
       format_doctors(doctors) if doctors
     end
 
     def get_all_vetted_mhps(params)
-      if params[:state].nil?
-        mhps = MentalHealthProfessional.where(vetted: true)
-      elsif params[:state].present?
-        mhps = MentalHealthProfessional.where(vetted: true, state: params[:state])
-      end
+      mhps = params[:state] ? MentalHealthProfessional.where(vetted: true, state: params[:state]) : MentalHealthProfessional.where(vetted: true)
       format_mhps(mhps) if mhps
     end
 
     def get_unvetted_doctors(params)
-      if params[:state].nil?
-        doctors = Doctor.where(vetted: false)
-      elsif params[:state].present?
-        doctors = Doctor.where(vetted: false, state: params[:state])
-      end
+      doctors = params[:state] ? Doctor.where(vetted: false, state: params[:state]) : Doctor.where(vetted: false)
       format_doctors(doctors) if doctors
     end
 
     def get_unvetted_mhps(params)
-      if params[:state].nil?
-        mhps = MentalHealthProfessional.where(vetted: false)
-      elsif params[:state].present?
-        mhps = MentalHealthProfessional.where(vetted: false, state: params[:state])
-      end
+      mhps = params[:state] ? MentalHealthProfessional.where(vetted: false, state: params[:state]) : MentalHealthProfessional.where(vetted: false)
       format_mhps(mhps) if mhps
     end
 
