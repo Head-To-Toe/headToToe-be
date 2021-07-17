@@ -3,11 +3,14 @@ class MedicalProfessionalsFacade
     def get_medical_professionals(params)
       case params[:type]
       when 'doctor'
-        care_givers = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
+        doctors = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
       when 'mhp'
-        care_givers = MedicalProfessionals::IndexService.get_all_vetted_mhps(params)
+        mhps = MedicalProfessionals::IndexService.get_all_vetted_mhps(params)
+      else
+        doctors = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
+        mhps = MedicalProfessionals::IndexService.get_all_vetted_mhps(params)
       end
-      OpenStruct.new(id: nil, list: care_givers)
+      OpenStruct.new(id: nil, doctors: doctors, mhps: mhps)
     end
 
     def get_unvetted_professionals(params)
