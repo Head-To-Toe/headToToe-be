@@ -29,170 +29,86 @@ Things you may want to cover:
 
 <hr>
 
-#### GET `/medical_professionals?type=doctor&state=South Dakota`   
-The medical professionals endpoint current has two required parameters: type, and state.  
-The type parameter accepts two values: doctors and mhp ( mental health professionals ).  
-Currently the state parameter only accepts capitalized spelled out states.  
-
-Example response:   
-```
-  {
-    "data": {
-        "id": null,
-        "type": "doctor",
-        "attributes": {
-            "list": [
-                {
-                    "id": 80,
-                    "first_name": "gnat",
-                    "last_name": "Slowpoke",
-                    "state": "South Dakota",
-                    "city": "Daphnechester",
-                    "street": "4493 Marvin Extension",
-                    "unit": "Suite 249",
-                    "zip": "19384",
-                    "phone": "234-456-2244",
-                    "vetted": true,
-                    "specialties": [
-                        {
-                            "id": 2,
-                            "name": "Orc"
-                        },
-                        {
-                            "id": 4,
-                            "name": "Sylvan"
-                        },
-                        {
-                            "id": 1,
-                            "name": "Undercommon"
-                        }
-                    ],
-                    "insurances": [
-                        {
-                            "id": 14,
-                            "company": "Schinner, Kreiger and Stokes"
-                        },
-                        {
-                            "id": 4,
-                            "company": "Yundt-Cronin"
-                        },
-                        {
-                            "id": 5,
-                            "company": "Herman-Bogan"
-                        }
-                    ]
-                },
-                {
-                    "id": 92,
-                    "first_name": "reindeer",
-                    "last_name": "Psyduck",
-                    "state": "South Dakota",
-                    "city": "Lake Nickychester",
-                    "street": "612 Edmundo Burg",
-                    "unit": "Suite 461",
-                    "zip": "19384",
-                    "phone": "234-456-2244",
-                    "vetted": true,
-                    "specialties": [
-                        {
-                            "id": 8,
-                            "name": "Deep Speech"
-                        },
-                        {
-                            "id": 1,
-                            "name": "Undercommon"
-                        }
-                    ],
-                    "insurances": [
-                        {
-                            "id": 10,
-                            "company": "Stamm-Renner"
-                        },
-                        {
-                            "id": 11,
-                            "company": "Reichel Group"
-                        }
-                    ]
-                }
-            ]
-        }
-    }
-}
-```
+## Endpoints
+### URL: https://head-to-toe-be.herokuapp.com/api/v1 </br>
 
 <hr>
 
-#### GET `/medical_professionals?type=mhp&state=Massachusetts`   
+#### GET `/medical_professionals`
+The GET medical professionals endpoint accepts three parameters, none of which are required. Any combination of parameters is acceptable.  
+Parameters:
+  - `state` accepts any state, capitalized, not abbreviated. Will limit search results to specified state.  
+  - `type` currently accepts: `doctor` and `mhp`. Will limit search results to doctors or mental health professionals.  
+  - `vetted` boolean. Default is true. If `false` is passed will limit search results to unvetted resources.
 
-Example response:   
+Example response:   `/medical_professionals?state=Colorado&type=doctor` <br>
 ```
-{
-    "data": {
-        "id": null,
-        "type": "mhp",
-        "attributes": {
-            "list": [
-                {
-                    "id": 62,
-                    "first_name": "panda",
-                    "last_name": "Dodrio",
-                    "state": "Massachusetts",
-                    "city": "Hamillside",
-                    "street": "32521 Green Freeway",
-                    "unit": "Apt. 942",
-                    "zip": "10385",
-                    "phone": "234-456-2244",
-                    "vetted": true,
-                    "cost": "$123-150",
-                    "specialties": [
-                        {
-                            "id": 3,
-                            "name": "Celestial"
-                        }
-                    ],
-                    "insurances": [
-                        {
-                            "id": 8,
-                            "company": "O'Keefe-Price"
-                        },
-                        {
-                            "id": 9,
-                            "company": "Conn-Erdman"
-                        }
-                    ]
-                },
-                {
-                    "id": 141,
-                    "first_name": "beaver",
-                    "last_name": "Nidoqueen",
-                    "state": "Massachusetts",
-                    "city": "North Nolan",
-                    "street": "95980 Vandervort Keys",
-                    "unit": "Suite 347",
-                    "zip": "10385",
-                    "phone": "234-456-2244",
-                    "vetted": true,
-                    "cost": "$123-150",
-                    "specialties": [
-                        {
-                            "id": 2,
-                            "name": "Orc"
-                        },
-                        {
-                            "id": 11,
-                            "name": "Abyssal"
-                        }
-                    ],
-                    "insurances": [
-                        {
-                            "id": 5,
-                            "company": "Herman-Bogan"
-                        }
-                    ]
-                }
-            ]
+  {
+  "data": {
+    "id": null,
+    "type": "vetted_professionals",
+    "attributes": {
+      "doctors": [
+        {
+          "id": 51,
+          "first_name": "tiger",
+          "last_name": "Gloom",
+          "state": "Colorado",
+          "city": "Curtland",
+          "street": "958 Dave Plain",
+          "unit": "Suite 526",
+          "zip": "19384",
+          "phone": "234-456-2244",
+          "vetted": true,
+          "specialties": [
+            {
+              "id": 13,
+              "name": "stuff",
+              "created_at": "2021-07-11T18:13:03.020Z",
+              "updated_at": "2021-07-11T18:13:03.020Z"
+            }
+          ],
+          "insurances": [
+            {
+              "id": 14,
+              "name": "corrupted",
+              "created_at": "2021-07-11T18:13:03.020Z",
+              "updated_at": "2021-07-11T18:13:03.020Z"
+            }
+          ]
+        },
+        {
+          "id": 151,
+          "first_name": "mammoth",
+          "last_name": "Zapdos",
+          "state": "Colorado",
+          "city": "New Jacinto",
+          "street": "7401 Noah Points",
+          "unit": "Suite 488",
+          "zip": "19384",
+          "phone": "234-456-2244",
+          "vetted": true,
+          "specialties": [
+            {
+              "id": 12,
+              "name": "rem",
+              "created_at": "2021-07-11T18:13:03.015Z",
+              "updated_at": "2021-07-11T18:13:03.015Z"
+            }
+          ],
+          "insurances": [
+            {
+              "id": 14,
+              "name": "bad news",
+              "created_at": "2021-07-11T18:13:03.020Z",
+              "updated_at": "2021-07-11T18:13:03.020Z"
+            }
+          ]
         }
+      ],
+      "mhps": null
     }
+  }
 }
 ```
 
