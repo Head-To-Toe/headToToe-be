@@ -4,12 +4,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
       medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({ type: params[:type],
                                                                                      state: params[:state] })
 
-      case params[:type]
-      when 'doctor'
-        render json: DoctorSerializer.new(medical_professionals).serializable_hash
-      when 'mhp'
-        render json: MhpSerializer.new(medical_professionals).serializable_hash
-      end
+      render json: VettedProfessionalsSerializer.new(medical_professionals).serializable_hash
     elsif params[:vetted] == 'false'
       unvetted_professionals = MedicalProfessionalsFacade.get_unvetted_professionals({ type: params[:type],
                                                                                        state: params[:state] })
