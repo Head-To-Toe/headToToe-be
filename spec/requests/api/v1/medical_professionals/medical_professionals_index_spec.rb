@@ -744,5 +744,123 @@ describe "medical professional requests" do
         expect(unvetted[:insurances]).to be_an(Array)
       end
     end
+
+    it 'returns all vetted pros if no params are given' do
+      unvetted_doctors   = create_list(:doctor, 10, vetted: false)
+      doctors            = create_list(:doctor, 10, vetted: true)
+
+      unvetted_mhps      = create_list(:mental_health_professional, 10, vetted: false)
+      mhps               = create_list(:mental_health_professional, 10, vetted: true)
+
+      insurances         = create_list(:insurance, 10)
+      specialties        = create_list(:specialty, 10)
+
+      doctor_insurances  = create_list(:doctor_insurance, 10, doctor: doctors.sample, insurance: insurances.sample)
+      doctor_specialties = create_list(:doctor_specialty, 10, doctor: doctors.sample, specialty: specialties.sample)
+
+      mhp_insurances  = create_list(:mhp_insurance, 10, mental_health_professional: mhps.sample, insurance: insurances.sample)
+      mhp_specialties = create_list(:mhp_specialty, 10, mental_health_professional: mhps.sample, specialty: specialties.sample)
+
+      get '/api/v1/medical_professionals'
+      
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+      
+      vetted_pros = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(vetted_pros).to have_key(:data)
+      expect(vetted_pros[:data].count).to eq(3)
+      expect(vetted_pros[:data]).to be_a(Hash)
+
+      expect(vetted_pros[:data]).to have_key(:id)
+      expect(vetted_pros[:data][:id]).to eq(nil)
+      
+      expect(vetted_pros[:data]).to have_key(:type)
+      expect(vetted_pros[:data][:type]).to eq('vetted_professionals')
+
+      expect(vetted_pros[:data]).to have_key(:attributes)
+      expect(vetted_pros[:data][:attributes]).to be_a(Hash)
+      expect(vetted_pros[:data][:attributes].keys).to eq([:doctors, :mhps])
+
+      expect(vetted_pros[:data][:attributes][:doctors]).to be_an(Array)
+      expect(vetted_pros[:data][:attributes][:mhps]).to be_an(Array)
+      
+      expect(vetted_pros[:data][:attributes][:doctors].count).to eq(10)
+      expect(vetted_pros[:data][:attributes][:mhps].count).to eq(10)
+
+      vetted_pros[:data][:attributes][:doctors].each do |vetted|
+        expect(vetted).to have_key(:id)
+        expect(vetted[:id]).to be_an(Integer)
+
+        expect(vetted).to have_key(:first_name)
+        expect(vetted[:first_name]).to be_a(String)
+
+        expect(vetted).to have_key(:state)
+        expect(vetted[:state]).to be_a(String)
+
+        expect(vetted).to have_key(:city)
+        expect(vetted[:city]).to be_a(String)
+
+        expect(vetted).to have_key(:street)
+        expect(vetted[:street]).to be_a(String)
+
+        expect(vetted).to have_key(:unit)
+        expect(vetted[:unit]).to be_a(String)
+
+        expect(vetted).to have_key(:zip)
+        expect(vetted[:zip]).to be_a(String)
+
+        expect(vetted).to have_key(:phone)
+        expect(vetted[:phone]).to be_a(String)
+
+        expect(vetted).to have_key(:vetted)
+        expect(vetted[:vetted]).to eq(true)
+
+        expect(vetted).to have_key(:specialties)
+        expect(vetted[:specialties]).to be_an(Array)
+
+        expect(vetted).to have_key(:insurances)
+        expect(vetted[:insurances]).to be_an(Array)
+      end
+
+      vetted_pros[:data][:attributes][:mhps].each do |vetted|
+        expect(vetted).to have_key(:id)
+        expect(vetted[:id]).to be_an(Integer)
+
+        expect(vetted).to have_key(:first_name)
+        expect(vetted[:first_name]).to be_a(String)
+
+        expect(vetted).to have_key(:state)
+        expect(vetted[:state]).to be_a(String)
+
+        expect(vetted).to have_key(:city)
+        expect(vetted[:city]).to be_a(String)
+
+        expect(vetted).to have_key(:street)
+        expect(vetted[:street]).to be_a(String)
+
+        expect(vetted).to have_key(:unit)
+        expect(vetted[:unit]).to be_a(String)
+
+        expect(vetted).to have_key(:zip)
+        expect(vetted[:zip]).to be_a(String)
+
+        expect(vetted).to have_key(:phone)
+        expect(vetted[:phone]).to be_a(String)
+
+        expect(vetted).to have_key(:cost)
+        expect(vetted[:cost]).to be_a(String)
+
+        expect(vetted).to have_key(:vetted)
+        expect(vetted[:vetted]).to eq(true)
+
+        expect(vetted).to have_key(:specialties)
+        expect(vetted[:specialties]).to be_an(Array)
+
+        expect(vetted).to have_key(:insurances)
+        expect(vetted[:insurances]).to be_an(Array)
+      end
+    end
+    it 'returns all medical professionals for a state if only the state param is passed'
   end
 end
