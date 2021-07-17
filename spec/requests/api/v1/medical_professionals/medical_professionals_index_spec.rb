@@ -26,17 +26,17 @@ describe "medical professional requests" do
       expect(doctors[:data][:id]).to eq(nil)
 
       expect(doctors[:data]).to have_key(:type)
-      expect(doctors[:data][:type]).to eq('doctor')
+      expect(doctors[:data][:type]).to eq('vetted_professionals')
 
       expect(doctors[:data]).to have_key(:attributes)
       expect(doctors[:data][:attributes]).to be_a(Hash)
-      expect(doctors[:data][:attributes]).to have_key(:list)
+      expect(doctors[:data][:attributes].keys).to eq([:doctors, :mhps])
 
-      expect(doctors[:data][:attributes][:list]).to be_an(Array)
+      expect(doctors[:data][:attributes][:doctors]).to be_an(Array)
       
-      expect(doctors[:data][:attributes][:list].count.zero?).to eq(false)
+      expect(doctors[:data][:attributes][:doctors].count.zero?).to eq(false)
 
-      doctors[:data][:attributes][:list].each do |doctor|
+      doctors[:data][:attributes][:doctors].each do |doctor|
         expect(doctor).to have_key(:id)
         expect(doctor[:id]).to be_an(Integer)
 
@@ -96,17 +96,18 @@ describe "medical professional requests" do
       expect(mental_health_professional[:data][:id]).to eq(nil)
 
       expect(mental_health_professional[:data]).to have_key(:type)
-      expect(mental_health_professional[:data][:type]).to eq('mhp')
+      expect(mental_health_professional[:data][:type]).to eq('vetted_professionals')
 
       expect(mental_health_professional[:data]).to have_key(:attributes)
       expect(mental_health_professional[:data][:attributes]).to be_a(Hash)
-      expect(mental_health_professional[:data][:attributes]).to have_key(:list)
+      
+      expect(mental_health_professional[:data][:attributes].keys).to eq([:doctors, :mhps])
 
-      expect(mental_health_professional[:data][:attributes][:list]).to be_an(Array)
+      expect(mental_health_professional[:data][:attributes][:mhps]).to be_an(Array)
 
-      expect(mental_health_professional[:data][:attributes][:list].count.zero?).to eq(false)
+      expect(mental_health_professional[:data][:attributes][:mhps].count.zero?).to eq(false)
 
-      mental_health_professional[:data][:attributes][:list].each do |mhp|
+      mental_health_professional[:data][:attributes][:mhps].each do |mhp|
         expect(mhp).to have_key(:id)
         expect(mhp[:id]).to be_an(Integer)
 
@@ -169,17 +170,17 @@ describe "medical professional requests" do
       expect(doctors[:data][:id]).to eq(nil)
 
       expect(doctors[:data]).to have_key(:type)
-      expect(doctors[:data][:type]).to eq('doctor')
+      expect(doctors[:data][:type]).to eq('vetted_professionals')
 
       expect(doctors[:data]).to have_key(:attributes)
       expect(doctors[:data][:attributes]).to be_a(Hash)
-      expect(doctors[:data][:attributes]).to have_key(:list)
+      expect(doctors[:data][:attributes]).to have_key(:doctors)
 
-      expect(doctors[:data][:attributes][:list]).to be_an(Array)
+      expect(doctors[:data][:attributes][:doctors]).to be_an(Array)
 
-      expect(doctors[:data][:attributes][:list].count).to eq(20)
+      expect(doctors[:data][:attributes][:doctors].count).to eq(20)
       
-      doctors[:data][:attributes][:list].each do |doctor|
+      doctors[:data][:attributes][:doctors].each do |doctor|
         expect(doctor).to have_key(:id)
         expect(doctor[:id]).to be_an(Integer)
 
