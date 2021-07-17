@@ -29,11 +29,6 @@ Things you may want to cover:
 
 <hr>
 
-## Endpoints
-### URL: https://head-to-toe-be.herokuapp.com/api/v1 </br>
-
-<hr>
-
 #### GET `/medical_professionals`
 The GET medical professionals endpoint accepts three parameters, none of which are required. Any combination of parameters is acceptable.  
 Parameters:
