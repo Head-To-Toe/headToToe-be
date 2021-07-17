@@ -41,6 +41,10 @@ Parameters:
   - `type` currently accepts: `doctor` and `mhp`. Will limit search results to doctors or mental health professionals.  
   - `vetted` boolean. Default is true. If `false` is passed will limit search results to unvetted resources.
 
+You can experiment with this endpoint with Postman here: <br>
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/15450986-511ccaee-abcb-414e-b9b9-462c63b8b49d?action=collection%2Ffork&collection-url=entityId%3D15450986-511ccaee-abcb-414e-b9b9-462c63b8b49d%26entityType%3Dcollection%26workspaceId%3Dcf4ab17c-554f-431e-b408-3b64b807b76e) <br>
+#### GET `/medical_professionals`
+
 Example response:   `/medical_professionals?state=Colorado&type=doctor` <br>
 ```
   {
