@@ -4,7 +4,7 @@ class MedicalProfessionals::DeleteService
       doctor = Doctor.find_by(id: id)
 
       if doctor
-        doctor.delete
+        doctor.destroy
       else
         false
       end
@@ -14,7 +14,7 @@ class MedicalProfessionals::DeleteService
       mhp = MentalHealthProfessional.find_by(id: id)
 
       if mhp
-        mhp.delete
+        mhp.destroy
       else
         false
       end
