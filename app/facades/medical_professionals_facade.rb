@@ -1,10 +1,7 @@
 class MedicalProfessionalsFacade
   class << self
-    include Validable
 
     def get_medical_professionals(params)
-      set_defaults(params)
-      return render status: :bad_request if !valid_params?(params)
       if params[:vetted] == 'true'
         get_vetted_professionals({ type: params[:type], state: params[:state] })
       elsif params[:vetted] == 'false'
