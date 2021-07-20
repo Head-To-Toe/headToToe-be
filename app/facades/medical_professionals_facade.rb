@@ -1,6 +1,18 @@
 class MedicalProfessionalsFacade
   class << self
+    include Validable
+
     def get_medical_professionals(params)
+      set_defaults(params)
+      return render status: :bad_request if !valid_params?(params)
+      if params[:vetted] == 'true'
+        get_vetted_professionals({ type: params[:type], state: params[:state] })
+      elsif params[:vetted] == 'false'
+        get_unvetted_professionals({ type: params[:type], state: params[:state] })
+      end
+    end
+
+    def get_vetted_professionals(params)
       case params[:type]
       when 'doctor'
         doctors = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
@@ -14,7 +26,7 @@ class MedicalProfessionalsFacade
     end
 
     def get_unvetted_professionals(params)
-      if params[:type].nil?
+      if params[:type] == 'all'
         doctors = MedicalProfessionals::IndexService.get_unvetted_doctors(params)
         mhps = MedicalProfessionals::IndexService.get_unvetted_mhps(params)
       elsif params[:type] == 'doctor'

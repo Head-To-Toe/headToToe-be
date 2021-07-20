@@ -1,25 +1,18 @@
 class Api::V1::MedicalProfessionalsController < ApplicationController
   def index
-    if params[:vetted].blank? || params[:vetted] == true
-      medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({ type: params[:type],
-                                                                                     state: params[:state] })
-
-      render json: VettedProfessionalsSerializer.new(medical_professionals).serializable_hash
-    elsif params[:vetted] == 'false'
-      unvetted_professionals = MedicalProfessionalsFacade.get_unvetted_professionals({ type: params[:type],
-                                                                                       state: params[:state] })
-      render json: UnvettedProfessionalsSerializer.new(unvetted_professionals).serializable_hash
-    end
+    medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({state: params[:state], type: params[:type], vetted: params[:vetted]})
+    
+    render json: MedicalProfessionalsSerializer.new(medical_professionals).serializable_hash
   end
 
   def create
     return render status: :unauthorized if unauthorized
     return render status: :unprocessable_entity unless params[:first_name] &&
-                                                       params[:last_name]  &&
-                                                       params[:profession] &&
-                                                       params[:insurance]
+                                                      params[:last_name]  &&
+                                                      params[:profession] &&
+                                                      params[:insurance]
     return render status: :unprocessable_entity unless params[:profession] == 'doctor' ||
-                                                       params[:profession] == 'mhp'
+                                                      params[:profession] == 'mhp'
 
     case params[:profession]
     when 'doctor'
