@@ -1,22 +1,24 @@
 class Api::V1::MedicalProfessionalsController < ApplicationController
   include Validable
-  
+
   def index
-    set_defaults(params)
-    return render status: :bad_request if !valid_params?(params)
-    medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({state: params[:state], type: params[:type], vetted: params[:vetted]})
-    
-    render json: MedicalProfessionalsSerializer.new(medical_professionals).serializable_hash
+    default_values(params)
+    return render status: :bad_request unless valid_params?(params)
+
+    resources = MedicalProfessionalsFacade.medical_professionals({ state: params[:state],
+                                                                   type: params[:type], vetted: params[:vetted] })
+
+    render json: MedicalProfessionalsSerializer.new(resources).serializable_hash
   end
 
   def create
     return render status: :unauthorized if unauthorized
     return render status: :unprocessable_entity unless params[:first_name] &&
-                                                      params[:last_name]  &&
-                                                      params[:profession] &&
-                                                      params[:insurance]
+                                                       params[:last_name]  &&
+                                                       params[:profession] &&
+                                                       params[:insurance]
     return render status: :unprocessable_entity unless params[:profession] == 'doctor' ||
-                                                      params[:profession] == 'mhp'
+                                                       params[:profession] == 'mhp'
 
     case params[:profession]
     when 'doctor'

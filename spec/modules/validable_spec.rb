@@ -11,7 +11,7 @@ RSpec.describe 'Validable' do
 
     it 'Accepts valid state & type, vetted nil, sets default' do
       params = {state: 'Colorado', type: 'mhp'}
-      set_defaults(params)
+      default_values(params)
 
       expect(valid_params?(params)).to eq(true)
 
@@ -22,7 +22,7 @@ RSpec.describe 'Validable' do
 
     it 'Accepts valid state & vetted, type nil, sets default' do
       params = {state: 'Colorado', vetted: 'false'}
-      set_defaults(params)
+      default_values(params)
 
       expect(valid_params?(params)).to eq(true)
 
@@ -33,7 +33,7 @@ RSpec.describe 'Validable' do
 
     it 'Accepts valid type & vetted, state nil, sets default' do
       params = {type: 'doctor', vetted: 'false'}
-      set_defaults(params)
+      default_values(params)
 
       expect(valid_params?(params)).to eq(true)
 
@@ -44,7 +44,7 @@ RSpec.describe 'Validable' do
 
     it 'Accepts no params, sets defaults' do
       params = {type: 'doctor', vetted: 'false'}
-      set_defaults(params)
+      default_values(params)
       
       expect(valid_params?(params)).to eq(true)
 
@@ -54,11 +54,11 @@ RSpec.describe 'Validable' do
     end
   end
 
-  context 'set_defaults' do
+  context 'default_values' do
     it 'sets default values if params are not provided' do
       params = {}
 
-      set_defaults(params)
+      default_values(params)
 
       expect(params[:state]).to eq('all')
       expect(params[:type]).to eq('all')
