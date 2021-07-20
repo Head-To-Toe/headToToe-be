@@ -43,5 +43,26 @@ RSpec.describe 'Validable' do
       expect(check_type(Array)).to eq(false)
     end
   end
+
+  context 'check_vetted(vetted)' do
+    it 'Sets default value if none is provided' do
+      expect(check_vetted(nil)).to eq(true)
+    end
+
+    it 'returns true if vetted is valid' do
+      expect(check_vetted('false')).to eq(true)
+      expect(check_vetted('true')).to eq(true)
+    end
+
+    it 'returns false if an invalid vetted is passed' do
+      expect(check_vetted('Pudding')).to eq(false)
+    end
+
+    it 'returns false if it is not a string' do
+      expect(check_vetted(0)).to eq(false)
+      expect(check_vetted(12)).to eq(false)
+      expect(check_vetted(Array)).to eq(false)
+    end
+  end
 end
 
