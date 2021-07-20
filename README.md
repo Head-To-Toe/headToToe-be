@@ -1,31 +1,77 @@
-# README
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Issues][issues-shield]][issues-url]
+<!-- PROJECT LOGO -->
+<br/>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<p align="center">
+  <a href="https://github.com/Head-To-Toe/headToToe-be">
+    <img src="https://github.com/Head-To-Toe/headToToe-be/blob/main/docs/head_to_toe_official.png">
+  </a>
+  <p align="center">
+    <a href="https://github.com/Head-To-Toe/headToToe-be/issues">Report Bug</a>
+  </p>
+</p>
 
-Things you may want to cover:
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  
+  <ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#endpoints">Endpoints</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contributors">Contributors</a></li>
+  </ol>
+  
+</details>
+<!-- ABOUT THE PROJECT -->
 
-* Ruby version
+## About The Project
+Head to Toe is a publically sourced LGBTQ+ health professional referral application. Find peer-acknowledged doctor and mental health professionals care across the U.S. Or, submit a resource for review and help others find care near them.
+<br> 
+<br>
+The Head to Toe backend is an API that aggregates doctor and mental health professional data to its partner frontend application. The frontend repo is located [here](https://github.com/Head-To-Toe/headToToe).
 
-* System dependencies
+### Built With
+* [RubyOnRails](https://rubyonrails.org/)
+* [CircleCI](https://circleci.com/)
+* [Factory Bot](https://github.com/thoughtbot/factory_bot)
+* [Faker](https://github.com/faker-ruby/faker)
+* [Fast JSON API](https://github.com/Netflix/fast_jsonapi)
+* [Rack Throttle](https://github.com/dryruby/rack-throttle)
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions </br>
+* [RSpec](https://rspec.info/)
+* [Simplecov](https://github.com/simplecov-ruby/simplecov)
+* [Capybara](https://github.com/teamcapybara/capybara)
+* [Shoulda-Matchers](https://github.com/thoughtbot/shoulda-matchers)
 
 
-* ...
-
+## Getting Started
+1. Fork this repo
+2. Clone down your fork
+   ```sh
+   git clone git@github.com:your-username/headToToe-be.git
+   ```
+3. Install dependencies
+   ```sh
+   bundle install
+   ```
+4. Create PostgreSQL database
+   ```sh
+   rake db:{create,migrate,seed}
+   ```
+5. Initialize rails server
+   ```sh
+   rails s
+   ```
+<!-- Endpoints -->
 ## Endpoints
-### URL: https://head-to-toe-be.herokuapp.com/api/v1 </br>
+*Utilize [Postman](https://www.postman.com/) or localhost:3000 to call endpoints:*
+
+  ### Public URL: https://head-to-toe-be.herokuapp.com/api/v1 </br>
 
 <hr>
 
@@ -156,10 +202,72 @@ headers:
 "Content-Type": "application/json"`, 
 "Accept": "application/json"
 ```
-Required params: "id", "profession"
+Required params: "profession"
 Example body:
 ```
 {
     "profession": "doctor"
 }
 ```
+## Roadmap
+The team utilized a [github project board](https://github.com/orgs/Head-To-Toe/projects/1) to organize project issues and coordinate workflow across 5 members and 2 repositories over a 3 week stretch.
+See the [open issues](https://github.com/Head-To-Toe/headToToe-be/issues) for a list of proposed features (and known issues).
+
+<!-- CONTRIBUTING -->
+## Contributing
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**. We hope that users provide input to improve their experience and that of others.
+
+###### Versions
+- Ruby 3.0.0
+- Rails 6.1.4
+  
+###### Making a Contribution
+1. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Open a Pull Request from your fork to this main repo
+
+<!-- CONTRIBUTORS -->
+### Contributors
+##### Backend Team
+Austin Andrade [![Github][github-shield]][austin-github-url] [![LinkedIn][linkedin-shield]][austin-linkedin-url] [![Email][email-shield]][austin-email-url] <br>
+Aidan Mcguire [![Github][github-shield]][aidan-github-url] [![LinkedIn][linkedin-shield]][aidan-linkedin-url] [![Email][email-shield]][aidan-email-url] <br>
+##### Frontend Team
+Angela Battillo [![Github][github-shield]][angie-github-url] [![LinkedIn][linkedin-shield]][angie-linkedin-url] [![Email][email-shield]][angie-email-url] <br>
+Marceline Ball [![Github][github-shield]][marceline-github-url] [![LinkedIn][linkedin-shield]][marceline-linkedin-url] [![Email][email-shield]][marceline-email-url] <br>
+Riley Martin [![Github][github-shield]][riley-github-url] [![LinkedIn][linkedin-shield]][riley-linkedin-url] [![Email][email-shield]][riley-email-url] <br>
+<!-- CONTACT -->
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Head-To-Toe/headToToe-be.svg?style=for-the-badge
+[contributors-url]: https://github.com/Head-To-Toe/headToToe-be/graphs/contributors
+[stars-url]: https://github.com/Head-To-Toe/headToToe-be/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Head-To-Toe/headToToe-be?style=for-the-badge
+[issues-url]: https://github.com/Head-To-Toe/headToToe-be/issues
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[github-shield]: https://img.shields.io/badge/-Github-black.svg?style=for-the-badge&logo=github&colorB=555
+[email-shield]: https://img.shields.io/badge/-Email-black.svg?style=for-the-badge&logo=gmail&colorB=555
+
+[austin-github-url]: https://github.com/austinandrade/
+[aidan-github-url]: https://github.com/A-McGuire
+[angie-github-url]: https://github.com/battan40
+[marceline-github-url]: https://github.com/MarcelineBall
+[riley-github-url]: https://github.com/RMartin0717
+
+
+[austin-email-url]: mailto:austinmandrade@gmail.com?subject=Hello%20Austin
+[aidan-email-url]: mailto:aidanmcguire211@gmail.com?subject=Hello%20Aidan
+[angie-email-url]: mailto:angela.battillo@gmail.com?subject=Hello%20Angie
+[marceline-email-url]: mailto:marcelineball@gmail.com?subject=Hello%20Marceline
+[riley-email-url]: mailto:riley.willow@gmail.com?subject=Hello%20Riley
+
+
+[austin-linkedin-url]: https://www.linkedin.com/in/austinandrade/
+[aidan-linkedin-url]: https://www.linkedin.com/in/aidanmcguire/
+[angie-linkedin-url]: https://www.linkedin.com/in/angela-battillo/
+[marceline-linkedin-url]: https://www.linkedin.com/in/marceline-ball/
+[riley-linkedin-url]: https://www.linkedin.com/in/rmartin0717/
