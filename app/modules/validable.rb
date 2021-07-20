@@ -15,8 +15,10 @@ module Validable
   def check_state(state)
     return true if state == 'all'
     return false if state.class != String
-    states = File.read('app/support/states.rb')
-    states.include?(state)
+    states = JSON.parse(File.read('app/support/states.json'))
+    states.any? do |abbreviated, full|
+      state == full
+    end
   end
   
   def check_type(type)
