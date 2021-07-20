@@ -1,6 +1,5 @@
 module Validable
   def valid_params?(params)
-    set_defaults(params)
     return true if check_state(params[:state]) &&
                     check_type(params[:type]) &&
                     check_vetted(params[:vetted])
