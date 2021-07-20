@@ -26,7 +26,7 @@ describe "medical professional requests" do
       expect(doctors[:data][:id]).to eq(nil)
 
       expect(doctors[:data]).to have_key(:type)
-      expect(doctors[:data][:type]).to eq('vetted_professionals')
+      expect(doctors[:data][:type]).to eq('medical_professionals')
 
       expect(doctors[:data]).to have_key(:attributes)
       expect(doctors[:data][:attributes]).to be_a(Hash)
@@ -96,7 +96,7 @@ describe "medical professional requests" do
       expect(mental_health_professional[:data][:id]).to eq(nil)
 
       expect(mental_health_professional[:data]).to have_key(:type)
-      expect(mental_health_professional[:data][:type]).to eq('vetted_professionals')
+      expect(mental_health_professional[:data][:type]).to eq('medical_professionals')
 
       expect(mental_health_professional[:data]).to have_key(:attributes)
       expect(mental_health_professional[:data][:attributes]).to be_a(Hash)
@@ -170,7 +170,7 @@ describe "medical professional requests" do
       expect(doctors[:data][:id]).to eq(nil)
 
       expect(doctors[:data]).to have_key(:type)
-      expect(doctors[:data][:type]).to eq('vetted_professionals')
+      expect(doctors[:data][:type]).to eq('medical_professionals')
 
       expect(doctors[:data]).to have_key(:attributes)
       expect(doctors[:data][:attributes]).to be_a(Hash)
@@ -244,12 +244,12 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
       expect(unvetted_pros[:data][:attributes].keys).to eq([:doctors, :mhps])
-
+      
       expect(unvetted_pros[:data][:attributes][:doctors]).to be_an(Array)
       expect(unvetted_pros[:data][:attributes][:mhps]).to be_an(Array)
       
@@ -356,7 +356,7 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
@@ -429,7 +429,7 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
@@ -502,7 +502,7 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
@@ -578,7 +578,7 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
@@ -659,12 +659,12 @@ describe "medical professional requests" do
       expect(unvetted_pros[:data][:id]).to eq(nil)
       
       expect(unvetted_pros[:data]).to have_key(:type)
-      expect(unvetted_pros[:data][:type]).to eq('unvetted_professionals')
+      expect(unvetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(unvetted_pros[:data]).to have_key(:attributes)
       expect(unvetted_pros[:data][:attributes]).to be_a(Hash)
       expect(unvetted_pros[:data][:attributes].keys).to eq([:doctors, :mhps])
-
+      
       expect(unvetted_pros[:data][:attributes][:doctors]).to be_an(Array)
       expect(unvetted_pros[:data][:attributes][:mhps]).to be_an(Array)
       
@@ -779,7 +779,7 @@ describe "medical professional requests" do
       expect(vetted_pros[:data][:id]).to eq(nil)
       
       expect(vetted_pros[:data]).to have_key(:type)
-      expect(vetted_pros[:data][:type]).to eq('vetted_professionals')
+      expect(vetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(vetted_pros[:data]).to have_key(:attributes)
       expect(vetted_pros[:data][:attributes]).to be_a(Hash)
@@ -897,7 +897,7 @@ describe "medical professional requests" do
       expect(vetted_pros[:data][:id]).to eq(nil)
       
       expect(vetted_pros[:data]).to have_key(:type)
-      expect(vetted_pros[:data][:type]).to eq('vetted_professionals')
+      expect(vetted_pros[:data][:type]).to eq('medical_professionals')
 
       expect(vetted_pros[:data]).to have_key(:attributes)
       expect(vetted_pros[:data][:attributes]).to be_a(Hash)
