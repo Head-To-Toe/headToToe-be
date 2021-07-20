@@ -2,11 +2,67 @@ require 'rails_helper'
 include Validable
 
 RSpec.describe 'Validable' do
-  context 'check_state(state)' do
-    it 'Sets default value if none is provided' do
-      expect(check_state(nil)).to eq('all')
+  context 'valid_params?' do
+    it 'Accepts all valid params' do
+      params = {state: 'Colorado', type: 'mhp', vetted: 'true'}
+
+      expect(valid_params?(params)).to eq(true)
     end
 
+    it 'Accepts valid state & type, vetted nil, sets default' do
+      params = {state: 'Colorado', type: 'mhp'}
+
+      expect(valid_params?(params)).to eq(true)
+
+      expect(params[:state]).to eq('Colorado')
+      expect(params[:type]).to eq('mhp')
+      expect(params[:vetted]).to eq('true')
+    end
+
+    it 'Accepts valid state & vetted, type nil, sets default' do
+      params = {state: 'Colorado', vetted: 'false'}
+
+      expect(valid_params?(params)).to eq(true)
+
+      expect(params[:state]).to eq('Colorado')
+      expect(params[:type]).to eq('all')
+      expect(params[:vetted]).to eq('false')
+    end
+
+    it 'Accepts valid type & vetted, state nil, sets default' do
+      params = {type: 'doctor', vetted: 'false'}
+
+      expect(valid_params?(params)).to eq(true)
+
+      expect(params[:state]).to eq('all')
+      expect(params[:type]).to eq('doctor')
+      expect(params[:vetted]).to eq('false')
+    end
+
+    it 'Accepts no params, sets defaults' do
+      params = {type: 'doctor', vetted: 'false'}
+
+      expect(valid_params?(params)).to eq(true)
+
+      expect(params[:state]).to eq('all')
+      expect(params[:type]).to eq('doctor')
+      expect(params[:vetted]).to eq('false')
+    end
+  end
+
+  context 'set_defaults' do
+    it 'sets default values if params are not provided' do
+      params = {}
+
+      set_defaults(params)
+
+      expect(params[:state]).to eq('all')
+      expect(params[:type]).to eq('all')
+      expect(params[:vetted]).to eq('true')
+    end
+  end
+
+  context 'check_state(state)' do
     it 'returns true if state is valid' do
       expect(check_state('Colorado')).to eq(true)
       expect(check_state('Ohio')).to eq(true)
@@ -24,10 +80,6 @@ RSpec.describe 'Validable' do
   end
 
   context 'check_type(type)' do
-    it 'Sets default value if none is provided' do
-      expect(check_type(nil)).to eq('all')
-    end
-
     it 'returns true if type is valid' do
       expect(check_type('doctor')).to eq(true)
       expect(check_type('mhp')).to eq(true)
@@ -45,10 +97,6 @@ RSpec.describe 'Validable' do
   end
 
   context 'check_vetted(vetted)' do
-    it 'Sets default value if none is provided' do
-      expect(check_vetted(nil)).to eq(true)
-    end
-
     it 'returns true if vetted is valid' do
       expect(check_vetted('false')).to eq(true)
       expect(check_vetted('true')).to eq(true)
