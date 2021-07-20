@@ -36,18 +36,8 @@ Head to Toe is a publically sourced LGBTQ+ health professional referral applicat
 The Head to Toe backend is an API that aggregates doctor and mental health professional data to its partner frontend application. The frontend repo is located [here](https://github.com/Head-To-Toe/headToToe).
 
 ### Built With
-* [RubyOnRails](https://rubyonrails.org/)
-* [CircleCI](https://circleci.com/)
-* [Factory Bot](https://github.com/thoughtbot/factory_bot)
-* [Faker](https://github.com/faker-ruby/faker)
-* [Fast JSON API](https://github.com/Netflix/fast_jsonapi)
-* [Rack Throttle](https://github.com/dryruby/rack-throttle)
-
-* [RSpec](https://rspec.info/)
-* [Simplecov](https://github.com/simplecov-ruby/simplecov)
-* [Capybara](https://github.com/teamcapybara/capybara)
-* [Shoulda-Matchers](https://github.com/thoughtbot/shoulda-matchers)
-
+* Core: [RubyOnRails](https://rubyonrails.org/), [CircleCI](https://circleci.com/), [Fast JSON API](https://github.com/Netflix/fast_jsonapi), and [Rack Throttle](https://github.com/dryruby/rack-throttle)
+* Testing: [RSpec](https://rspec.info/), [Simplecov](https://github.com/simplecov-ruby/simplecov), [Capybara](https://github.com/teamcapybara/capybara), [Shoulda-Matchers](https://github.com/thoughtbot/shoulda-matchers), [Factory Bot](https://github.com/thoughtbot/factory_bot), and [Faker](https://github.com/faker-ruby/faker)
 
 ## Getting Started
 1. Fork this repo
@@ -76,7 +66,7 @@ The Head to Toe backend is an API that aggregates doctor and mental health profe
 <hr>
 
 #### GET `/medical_professionals`
-The GET medical professionals endpoint accepts three parameters, none of which are required. Any combination of parameters is acceptable.  
+The GET medical professionals endpoint accepts three parameters, none of which are required. Any combination of parameters is acceptable. The public endpoint is limited to 60 GET requests a minute. <br>
 Parameters:
   - `state` accepts any state, capitalized, not abbreviated. Will limit search results to specified state.  
   - `type` currently accepts: `doctor` and `mhp`. Will limit search results to doctors or mental health professionals.  
@@ -84,7 +74,6 @@ Parameters:
 
 You can experiment with this endpoint with Postman here: <br>
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/15450986-511ccaee-abcb-414e-b9b9-462c63b8b49d?action=collection%2Ffork&collection-url=entityId%3D15450986-511ccaee-abcb-414e-b9b9-462c63b8b49d%26entityType%3Dcollection%26workspaceId%3Dcf4ab17c-554f-431e-b408-3b64b807b76e) <br>
-#### GET `/medical_professionals`
 
 Example response:   `/medical_professionals?state=Colorado&type=doctor` <br>
 ```
@@ -160,6 +149,7 @@ Example response:   `/medical_professionals?state=Colorado&type=doctor` <br>
 <hr>
 
 #### POST `/medical_professionals` </br> 
+The POST medical professionals endpoint accepts 11-12 possible parameters. The public endpoint is limited to 6 POST requests a minute.
 A successful create request will return 201 Created </br> 
 A request missing required params will return 422 Unprocessable Entity </br> 
 A request missing an api key will return 401 Unauthorized </br> 
@@ -192,6 +182,7 @@ Example body: ( To add a doctor change the `profession` value to `doctor` and om
 <hr>
 
 #### PATCH and DELETE `/medical_professionals/#id` </br> 
+The PATCH & DELETE medical professionals endpoints require 2 parameters; profession and id. The public endpoint is limited to 10 PATCH and 30 DELETE requests a minute. <br>
 A successful update request will return 204 No Content </br> 
 A request missing required params will return 422 Unprocessable Entity </br> 
 A request missing an api key will return 401 Unauthorized </br> 
@@ -202,7 +193,7 @@ headers:
 "Content-Type": "application/json"`, 
 "Accept": "application/json"
 ```
-Required params: "profession"
+Required params: "profession" and /id <br>
 Example body:
 ```
 {
@@ -231,7 +222,7 @@ Contributions are what make the open source community such an amazing place to b
 ### Contributors
 ##### Backend Team
 Austin Andrade [![Github][github-shield]][austin-github-url] [![LinkedIn][linkedin-shield]][austin-linkedin-url] [![Email][email-shield]][austin-email-url] <br>
-Aidan Mcguire [![Github][github-shield]][aidan-github-url] [![LinkedIn][linkedin-shield]][aidan-linkedin-url] [![Email][email-shield]][aidan-email-url] <br>
+Aidan McGuire [![Github][github-shield]][aidan-github-url] [![LinkedIn][linkedin-shield]][aidan-linkedin-url] [![Email][email-shield]][aidan-email-url] <br>
 ##### Frontend Team
 Angela Battillo [![Github][github-shield]][angie-github-url] [![LinkedIn][linkedin-shield]][angie-linkedin-url] [![Email][email-shield]][angie-email-url] <br>
 Marceline Ball [![Github][github-shield]][marceline-github-url] [![LinkedIn][linkedin-shield]][marceline-linkedin-url] [![Email][email-shield]][marceline-email-url] <br>
