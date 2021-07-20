@@ -1,5 +1,9 @@
 class Api::V1::MedicalProfessionalsController < ApplicationController
+  include Validable
+  
   def index
+    set_defaults(params)
+    return render status: :bad_request if !valid_params?(params)
     medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({state: params[:state], type: params[:type], vetted: params[:vetted]})
     
     render json: MedicalProfessionalsSerializer.new(medical_professionals).serializable_hash
