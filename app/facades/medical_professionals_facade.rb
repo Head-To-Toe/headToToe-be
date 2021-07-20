@@ -1,35 +1,36 @@
 class MedicalProfessionalsFacade
   class << self
-
-    def get_medical_professionals(params)
-      if params[:vetted] == 'true'
-        get_vetted_professionals({ type: params[:type], state: params[:state] })
-      elsif params[:vetted] == 'false'
-        get_unvetted_professionals({ type: params[:type], state: params[:state] })
+    def medical_professionals(params)
+      case params[:vetted]
+      when 'true'
+        vetted_professionals({ type: params[:type], state: params[:state] })
+      when 'false'
+        unvetted_professionals({ type: params[:type], state: params[:state] })
       end
     end
 
-    def get_vetted_professionals(params)
+    def vetted_professionals(params)
       case params[:type]
       when 'doctor'
-        doctors = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
+        doctors = MedicalProfessionals::IndexService.vetted_doctors(params)
       when 'mhp'
-        mhps = MedicalProfessionals::IndexService.get_all_vetted_mhps(params)
+        mhps = MedicalProfessionals::IndexService.vetted_mhps(params)
       else
-        doctors = MedicalProfessionals::IndexService.get_all_vetted_doctors(params)
-        mhps = MedicalProfessionals::IndexService.get_all_vetted_mhps(params)
+        doctors = MedicalProfessionals::IndexService.vetted_doctors(params)
+        mhps = MedicalProfessionals::IndexService.vetted_mhps(params)
       end
       OpenStruct.new(id: nil, doctors: doctors, mhps: mhps)
     end
 
-    def get_unvetted_professionals(params)
-      if params[:type] == 'all'
-        doctors = MedicalProfessionals::IndexService.get_unvetted_doctors(params)
-        mhps = MedicalProfessionals::IndexService.get_unvetted_mhps(params)
-      elsif params[:type] == 'doctor'
-        doctors = MedicalProfessionals::IndexService.get_unvetted_doctors(params)
-      elsif params[:type] == 'mhp'
-        mhps = MedicalProfessionals::IndexService.get_unvetted_mhps(params)
+    def unvetted_professionals(params)
+      case params[:type]
+      when 'all'
+        doctors = MedicalProfessionals::IndexService.unvetted_doctors(params)
+        mhps = MedicalProfessionals::IndexService.unvetted_mhps(params)
+      when 'doctor'
+        doctors = MedicalProfessionals::IndexService.unvetted_doctors(params)
+      when 'mhp'
+        mhps = MedicalProfessionals::IndexService.unvetted_mhps(params)
       end
       OpenStruct.new(id: nil, doctors: doctors, mhps: mhps)
     end

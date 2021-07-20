@@ -1,22 +1,22 @@
 class MedicalProfessionals::IndexService
   class << self
-    def get_all_vetted_doctors(params)
-      doctors = params[:state] == 'all' ? Doctor.get_vetted : Doctor.get_vetted_by_state(params[:state])
+    def vetted_doctors(params)
+      doctors = params[:state] == 'all' ? Doctor.vetted : Doctor.vetted_by_state(params[:state])
       format_doctors(doctors) if doctors
     end
-    
-    def get_all_vetted_mhps(params)
-      mhps = params[:state] == 'all' ? MentalHealthProfessional.get_vetted : MentalHealthProfessional.get_vetted_by_state(params[:state])
+
+    def vetted_mhps(params)
+      mhps = params[:state] == 'all' ? MentalHealthProfessional.vetted : MentalHealthProfessional.vetted_by_state(params[:state])
       format_mhps(mhps) if mhps
     end
 
-    def get_unvetted_doctors(params)
-      doctors = params[:state] == 'all' ? Doctor.get_unvetted : Doctor.get_unvetted_by_state(params[:state])
+    def unvetted_doctors(params)
+      doctors = params[:state] == 'all' ? Doctor.unvetted : Doctor.unvetted_by_state(params[:state])
       format_doctors(doctors) if doctors
     end
 
-    def get_unvetted_mhps(params)
-      mhps = params[:state] == 'all' ? MentalHealthProfessional.get_unvetted : MentalHealthProfessional.get_unvetted_by_state(params[:state])
+    def unvetted_mhps(params)
+      mhps = params[:state] == 'all' ? MentalHealthProfessional.unvetted : MentalHealthProfessional.unvetted_by_state(params[:state])
       format_mhps(mhps) if mhps
     end
 
