@@ -1,15 +1,14 @@
 class Api::V1::MedicalProfessionalsController < ApplicationController
-  def index
-    if params[:vetted].blank? || params[:vetted] == true
-      medical_professionals = MedicalProfessionalsFacade.get_medical_professionals({ type: params[:type],
-                                                                                     state: params[:state] })
+  include Validable
 
-      render json: VettedProfessionalsSerializer.new(medical_professionals).serializable_hash
-    elsif params[:vetted] == 'false'
-      unvetted_professionals = MedicalProfessionalsFacade.get_unvetted_professionals({ type: params[:type],
-                                                                                       state: params[:state] })
-      render json: UnvettedProfessionalsSerializer.new(unvetted_professionals).serializable_hash
-    end
+  def index
+    default_values(params)
+    return render status: :bad_request unless valid_params?(params)
+
+    resources = MedicalProfessionalsFacade.medical_professionals({ state: params[:state],
+                                                                   type: params[:type], vetted: params[:vetted] })
+
+    render json: MedicalProfessionalsSerializer.new(resources).serializable_hash
   end
 
   def create
