@@ -1,16 +1,16 @@
 module Validable
-  def valid_params?(params)
-    return true if check_state(params[:state]) &&
-                   check_type(params[:type]) &&
-                   check_vetted(params[:vetted])
-
-    false
-  end
-
   def default_values(params)
     params[:state] = 'all' if params[:state].nil?
     params[:type] = 'all' if params[:type].nil?
     params[:vetted] = 'true' if params[:vetted].nil?
+  end
+
+  def valid_params?(params)
+    return true if check_state(params[:state]) &&
+                    check_type(params[:type]) &&
+                    check_vetted(params[:vetted])
+
+    false
   end
 
   def check_state(state)

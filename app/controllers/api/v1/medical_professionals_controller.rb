@@ -6,7 +6,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     return render status: :bad_request unless valid_params?(params)
 
     resources = MedicalProfessionalsFacade.medical_professionals({ state: params[:state],
-                                                                   type: params[:type], vetted: params[:vetted] })
+                                                                    type: params[:type], vetted: params[:vetted] })
 
     render json: MedicalProfessionalsSerializer.new(resources).serializable_hash
   end
@@ -14,11 +14,11 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
   def create
     return render status: :unauthorized if unauthorized
     return render status: :unprocessable_entity unless params[:first_name] &&
-                                                       params[:last_name]  &&
-                                                       params[:profession] &&
-                                                       params[:insurance]
+                                                        params[:last_name]  &&
+                                                        params[:profession] &&
+                                                        params[:insurance]
     return render status: :unprocessable_entity unless params[:profession] == 'doctor' ||
-                                                       params[:profession] == 'mhp'
+                                                        params[:profession] == 'mhp'
 
     case params[:profession]
     when 'doctor'
