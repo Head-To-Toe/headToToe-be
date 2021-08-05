@@ -7,8 +7,8 @@ MentalHealthProfessional.destroy_all
 15.times { Specialty.find_or_create_by!( name: Faker::Types.rb_string ) }
 
 150.times do Doctor.create!(
-    first_name: Faker::Creature::Animal.name,
-    last_name: Faker::Games::Pokemon.name,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
     state: Faker::Address.state,
     city: Faker::Address.city,
     zip: '19384',
@@ -20,8 +20,8 @@ MentalHealthProfessional.destroy_all
 end
 
 10.times do Doctor.create!(
-    first_name: Faker::Creature::Animal.name,
-    last_name: Faker::Games::Pokemon.name,
+    first_name: Faker::Name.first_name
+    last_name: Faker::Name.last_name,
     state: 'Colorado',
     city: Faker::Address.city,
     zip: '19384',
@@ -33,8 +33,8 @@ end
 end
 
 10.times do MentalHealthProfessional.create!(
-    first_name: Faker::Creature::Animal.name,
-    last_name: Faker::Games::Pokemon.name,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
     state: 'Colorado',
     city: Faker::Address.city,
     street: Faker::Address.street_address,
@@ -47,8 +47,8 @@ end
 end
 
 150.times do MentalHealthProfessional.create!(
-    first_name: Faker::Creature::Animal.name,
-    last_name: Faker::Games::Pokemon.name,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
     state: Faker::Address.state,
     city: Faker::Address.city,
     street: Faker::Address.street_address,
