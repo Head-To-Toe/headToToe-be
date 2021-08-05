@@ -20,7 +20,7 @@ MentalHealthProfessional.destroy_all
 end
 
 10.times do Doctor.create!(
-    first_name: Faker::Name.first_name
+    first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     state: 'Colorado',
     city: Faker::Address.city,
