@@ -33,8 +33,8 @@ class MedicalProfessionals::IndexService
           zip: doctor.zip,
           phone: doctor.phone,
           vetted: doctor.vetted,
-          specialties: doctor.specialties,
-          insurances: doctor.insurances
+          specialties: doctor.specialties.pluck(:name),
+          insurances: doctor.insurances.pluck(:company)
         }
       end
     end
@@ -53,8 +53,8 @@ class MedicalProfessionals::IndexService
           phone: mhp.phone,
           vetted: mhp.vetted,
           cost: mhp.cost,
-          specialties: mhp.specialties,
-          insurances: mhp.insurances
+          specialties: mhp.specialties.pluck(:name),
+          insurances: mhp.insurances.pluck(:company)
         }
       end
     end
