@@ -33,4 +33,14 @@ module Validable
   def check_vetted(vetted)
     %w[true false].include?(vetted)
   end
+
+  def valid_create_params?(params)
+    return false if params[:profession] != 'doctor' && params[:profession] != 'mhp'
+    return false if params[:first_name].class != String
+    return false if params[:first_name].empty? == true
+    return false if params[:last_name].class != String
+    return false if params[:last_name].empty? == true
+    return false if params[:insurance].class != Array
+    true
+  end
 end
