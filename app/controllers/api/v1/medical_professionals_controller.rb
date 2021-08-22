@@ -35,17 +35,17 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     return render status: :unauthorized if unauthorized
     return render status: :bad_request unless valid_update_or_destroy?(params)
 
-    completed_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:id], params[:profession])
-    return render status: :not_found unless completed_update
+    successful_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:id], params[:profession])
+    return render status: :not_found unless successful_update
   end
 
   def destroy
     return render status: :unauthorized if unauthorized
     return render status: :bad_request unless valid_update_or_destroy?(params)
 
-    completed_delete = MedicalProfessionalsFacade.delete_doctor_or_mhp_record(params[:id], params[:profession])
+    successful_delete = MedicalProfessionalsFacade.delete_doctor_or_mhp_record(params[:id], params[:profession])
 
-    render status: :not_found unless completed_delete
+    render status: :not_found unless successful_delete
   end
 
   private
