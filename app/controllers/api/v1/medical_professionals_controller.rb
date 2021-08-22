@@ -63,7 +63,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
   end
 
   def unauthorized
-    return true if request.headers['api-key'] != 'aidanisthebest'
+    return true if request.headers['api-key'] != 'aidanisthebest' # This is a joke! Will implement real auth when users/login is implemented
 
     false
   end
