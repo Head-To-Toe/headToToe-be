@@ -13,12 +13,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def create
     return render status: :unauthorized if unauthorized
-    return render status: :unprocessable_entity unless params[:first_name] &&
-                                                        params[:last_name]  &&
-                                                        params[:profession] &&
-                                                        params[:insurance]
-    return render status: :unprocessable_entity unless params[:profession] == 'doctor' ||
-                                                        params[:profession] == 'mhp'
+    return render status: :unprocessable_entity unless valid_create_params?(params)
 
     case params[:profession]
     when 'doctor'
