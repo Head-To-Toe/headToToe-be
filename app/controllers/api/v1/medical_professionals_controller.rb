@@ -3,7 +3,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def index
     default_values(params)
-    return render status: :bad_request unless valid_params?(params)
+    return render status: :bad_request unless valid?(params)
 
     resources = MedicalProfessionalsFacade.medical_professionals({ state: params[:state],
                                                                     type: params[:type], vetted: params[:vetted] })
@@ -13,7 +13,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
 
   def create
     return render status: :unauthorized if unauthorized
-    return render status: :unprocessable_entity unless valid_create_params?(params)
+    return render status: :unprocessable_entity unless valid_create?(params)
 
     case params[:profession]
     when 'doctor'

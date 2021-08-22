@@ -2,18 +2,18 @@ require 'rails_helper'
 include Validable
 
 RSpec.describe 'Validable' do
-  context 'valid_params?' do
+  context 'valid?' do
     it 'Accepts all valid params' do
       params = {state: 'Colorado', type: 'mhp', vetted: 'true'}
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
     end
 
     it 'Accepts valid state & type, vetted nil, sets default' do
       params = {state: 'Colorado', type: 'mhp'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('Colorado')
       expect(params[:type]).to eq('mhp')
@@ -24,7 +24,7 @@ RSpec.describe 'Validable' do
       params = {state: 'Colorado', vetted: 'false'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('Colorado')
       expect(params[:type]).to eq('all')
@@ -35,7 +35,7 @@ RSpec.describe 'Validable' do
       params = {type: 'doctor', vetted: 'false'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('all')
       expect(params[:type]).to eq('doctor')
@@ -46,7 +46,7 @@ RSpec.describe 'Validable' do
       params = {type: 'doctor', vetted: 'false'}
       default_values(params)
       
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('all')
       expect(params[:type]).to eq('doctor')
@@ -117,17 +117,17 @@ RSpec.describe 'Validable' do
     end
   end
 
-  context 'valid_create_params?(params)' do
+  context 'valid_create?(params)' do
     it 'returns true if all require params are included' do
       params = { first_name: 'blah', last_name: 'bleh', profession: 'doctor', insurance: ['expensive']}
 
-      expect(valid_create_params?(params)).to eq(true)
+      expect(valid_create?(params)).to eq(true)
     end
 
     it 'returns false if all profession is not doctor or mhp' do
       params = { first_name: 'blah', last_name: 'bleh', profession: 'fancy', insurance: ['expensive']}
 
-      expect(valid_create_params?(params)).to eq(false)
+      expect(valid_create?(params)).to eq(false)
     end
 
     it 'returns false if first_name is not included, blank, or not a string' do
@@ -138,12 +138,12 @@ RSpec.describe 'Validable' do
       params5 = { first_name: 1, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
       params6 = { first_name: ['blarg'], last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
 
-      expect(valid_create_params?(params1)).to eq(false)
-      expect(valid_create_params?(params2)).to eq(false)
-      expect(valid_create_params?(params3)).to eq(false)
-      expect(valid_create_params?(params4)).to eq(false)
-      expect(valid_create_params?(params5)).to eq(false)
-      expect(valid_create_params?(params6)).to eq(false)
+      expect(valid_create?(params1)).to eq(false)
+      expect(valid_create?(params2)).to eq(false)
+      expect(valid_create?(params3)).to eq(false)
+      expect(valid_create?(params4)).to eq(false)
+      expect(valid_create?(params5)).to eq(false)
+      expect(valid_create?(params6)).to eq(false)
     end
 
     it 'returns false if last_name is not included, blank, or not a string' do
@@ -154,12 +154,12 @@ RSpec.describe 'Validable' do
       params5 = { first_name: 'blah', last_name: nil, profession: 'doctor', insurance: ['expensive']}
       params6 = { first_name: 'blah', last_name: ['bleh'], profession: 'doctor', insurance: ['expensive']}
 
-      expect(valid_create_params?(params1)).to eq(false)
-      expect(valid_create_params?(params2)).to eq(false)
-      expect(valid_create_params?(params3)).to eq(false)
-      expect(valid_create_params?(params4)).to eq(false)
-      expect(valid_create_params?(params5)).to eq(false)
-      expect(valid_create_params?(params6)).to eq(false)
+      expect(valid_create?(params1)).to eq(false)
+      expect(valid_create?(params2)).to eq(false)
+      expect(valid_create?(params3)).to eq(false)
+      expect(valid_create?(params4)).to eq(false)
+      expect(valid_create?(params5)).to eq(false)
+      expect(valid_create?(params6)).to eq(false)
     end
   end
 

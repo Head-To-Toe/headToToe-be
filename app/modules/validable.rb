@@ -5,7 +5,7 @@ module Validable
     params[:vetted] = 'true' if params[:vetted].nil?
   end
 
-  def valid_params?(params)
+  def valid?(params)
     return true if check_state(params[:state]) &&
                     check_type(params[:type]) &&
                     check_vetted(params[:vetted])
@@ -34,7 +34,7 @@ module Validable
     %w[true false].include?(vetted)
   end
 
-  def valid_create_params?(params)
+  def valid_create?(params)
     return false if params[:profession] != 'doctor' && params[:profession] != 'mhp'
     return false if params[:first_name].class != String
     return false if params[:first_name].empty? == true
