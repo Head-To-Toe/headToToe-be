@@ -6,7 +6,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     return render status: :bad_request unless valid?(params)
 
     resources = MedicalProfessionalsFacade.medical_professionals({ state: params[:state],
-                                                                    type: params[:type], vetted: params[:vetted] })
+                                                                  type: params[:type], vetted: params[:vetted] })
 
     render json: MedicalProfessionalsSerializer.new(resources).serializable_hash
   end
@@ -36,6 +36,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
     return render status: :bad_request unless valid_update_or_destroy?(params)
 
     successful_update = MedicalProfessionalsFacade.update_doctor_or_mhp_record(params[:id], params[:profession])
+
     return render status: :not_found unless successful_update
   end
 
@@ -59,7 +60,7 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
   end
 
   def unauthorized
-    return true if request.headers['api-key'] != 'aidanisthebest' # This is a joke! Will implement real auth when users/login is implemented
+    return true if request.headers['api-key'] != 'aidanisthebest'
 
     false
   end

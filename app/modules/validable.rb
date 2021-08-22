@@ -7,8 +7,8 @@ module Validable
 
   def valid?(params)
     return true if check_state(params[:state]) &&
-                    check_type(params[:type]) &&
-                    check_vetted(params[:vetted])
+                   check_type(params[:type]) &&
+                   check_vetted(params[:vetted])
 
     false
   end
@@ -41,6 +41,7 @@ module Validable
     return false if params[:last_name].class != String
     return false if params[:last_name].empty? == true
     return false if params[:insurance].class != Array
+
     true
   end
 
@@ -48,7 +49,8 @@ module Validable
     return false if params[:profession] != 'doctor' && params[:profession] != 'mhp'
     return false if params[:id].class != String
     return false if params[:id].to_i.class != Integer
-    return false if params[:id].to_i == 0
+    return false if params[:id].to_i.zero?
+
     true
   end
 end
