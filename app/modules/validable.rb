@@ -46,7 +46,9 @@ module Validable
 
   def valid_update_or_destroy?(params)
     return false if params[:profession] != 'doctor' && params[:profession] != 'mhp'
-    return false if params[:id].class != Integer
+    return false if params[:id].class != String
+    return false if params[:id].to_i.class != Integer
+    return false if params[:id].to_i == 0
     true
   end
 end
