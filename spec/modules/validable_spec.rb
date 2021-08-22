@@ -116,5 +116,51 @@ RSpec.describe 'Validable' do
       expect(check_vetted(Array)).to eq(false)
     end
   end
+
+  context 'valid_create_params?' do
+    it 'returns true if all require params are included' do
+      params = { first_name: 'blah', last_name: 'bleh', profession: 'doctor', insurance: ['expensive']}
+
+      expect(valid_create_params?(params)).to eq(true)
+    end
+
+    it 'returns false if all profession is not doctor or mhp' do
+      params = { first_name: 'blah', last_name: 'bleh', profession: 'fancy', insurance: ['expensive']}
+
+      expect(valid_create_params?(params)).to eq(false)
+    end
+
+    it 'returns false if first_name is not included, blank, or not a string' do
+      params1 = { first_name: '', last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params2 = { last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params3 = { first_name: 0, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params4 = { first_name: nil, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params5 = { first_name: 1, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params6 = { first_name: ['blarg'], last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+
+      expect(valid_create_params?(params1)).to eq(false)
+      expect(valid_create_params?(params2)).to eq(false)
+      expect(valid_create_params?(params3)).to eq(false)
+      expect(valid_create_params?(params4)).to eq(false)
+      expect(valid_create_params?(params5)).to eq(false)
+      expect(valid_create_params?(params6)).to eq(false)
+    end
+
+    it 'returns false if last_name is not included, blank, or not a string' do
+      params1 = { first_name: 'blah', profession: 'doctor', insurance: ['expensive']}
+      params2 = { first_name: 'blah', last_name: '', profession: 'doctor', insurance: ['expensive']}
+      params3 = { first_name: 'blah', last_name: 0, profession: 'doctor', insurance: ['expensive']}
+      params4 = { first_name: 'blah', last_name: 1, profession: 'doctor', insurance: ['expensive']}
+      params5 = { first_name: 'blah', last_name: nil, profession: 'doctor', insurance: ['expensive']}
+      params6 = { first_name: 'blah', last_name: ['bleh'], profession: 'doctor', insurance: ['expensive']}
+
+      expect(valid_create_params?(params1)).to eq(false)
+      expect(valid_create_params?(params2)).to eq(false)
+      expect(valid_create_params?(params3)).to eq(false)
+      expect(valid_create_params?(params4)).to eq(false)
+      expect(valid_create_params?(params5)).to eq(false)
+      expect(valid_create_params?(params6)).to eq(false)
+    end
+  end
 end
 
