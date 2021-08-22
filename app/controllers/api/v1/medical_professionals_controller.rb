@@ -22,15 +22,13 @@ class Api::V1::MedicalProfessionalsController < ApplicationController
         params[:specialties], params[:profession]
       )
 
-      successful_creation ? (render status: :created) : (render status: :conflict)
-
     when 'mhp'
       successful_creation = MedicalProfessionalsFacade.create_mhp_records(
         mhp_params, params[:insurance],
         params[:specialties], params[:profession]
       )
-      successful_creation ? (render status: :created) : (render status: :conflict)
     end
+    successful_creation ? (render status: :created) : (render status: :conflict)
   end
 
   def update
