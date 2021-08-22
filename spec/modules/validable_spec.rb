@@ -117,7 +117,7 @@ RSpec.describe 'Validable' do
     end
   end
 
-  context 'valid_create_params?' do
+  context 'valid_create_params?(params)' do
     it 'returns true if all require params are included' do
       params = { first_name: 'blah', last_name: 'bleh', profession: 'doctor', insurance: ['expensive']}
 
@@ -160,6 +160,44 @@ RSpec.describe 'Validable' do
       expect(valid_create_params?(params4)).to eq(false)
       expect(valid_create_params?(params5)).to eq(false)
       expect(valid_create_params?(params6)).to eq(false)
+    end
+  end
+
+  context 'valid_update_or_destroy?(params)' do
+    it 'returns true if all required params are included' do
+      params1 = { id: 1, profession: 'doctor'}
+      params2 = { id: 2, profession: 'mhp'}
+
+      expect(valid_update_or_destroy?(params1)).to eq(true)
+      expect(valid_update_or_destroy?(params2)).to eq(true)
+    end
+
+    it 'returns false if profession is not doctor or mhp' do
+      params1 = { id: 1, profession: 'fancy'}
+      params2 = { id: 2, profession: ''}
+      params3 = { id: 2, profession: 1}
+      params4 = { id: 2, profession: nil}
+      params5 = { id: 2, profession: ['doctor']}
+      params6 = { id: 2}
+
+      expect(valid_update_or_destroy?(params1)).to eq(false)
+      expect(valid_update_or_destroy?(params2)).to eq(false)
+      expect(valid_update_or_destroy?(params3)).to eq(false)
+      expect(valid_update_or_destroy?(params4)).to eq(false)
+      expect(valid_update_or_destroy?(params5)).to eq(false)
+      expect(valid_update_or_destroy?(params6)).to eq(false)
+    end
+
+    it 'returns false if id is not an integer' do
+      params1 = { id: 'one', profession: 'doctor'}
+      params2 = { id: [1], profession: 'doctor'}
+      params3 = { id: '', profession: 'doctor'}
+      params4 = { profession: 'doctor'}
+
+      expect(valid_update_or_destroy?(params1)).to eq(false)
+      expect(valid_update_or_destroy?(params2)).to eq(false)
+      expect(valid_update_or_destroy?(params3)).to eq(false)
+      expect(valid_update_or_destroy?(params4)).to eq(false)
     end
   end
 end
