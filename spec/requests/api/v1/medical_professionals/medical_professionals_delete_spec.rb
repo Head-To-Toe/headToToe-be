@@ -112,7 +112,7 @@ RSpec.describe 'DELETE /medical_professionals' do
       end
 
       context 'missing params' do
-        it "returns 422 if profession is missing from request params" do
+        it "returns 400 if profession is missing from request params" do
           doctor = create :doctor, vetted: false
       
           delete "/api/v1/medical_professionals/#{doctor.id}", 
@@ -123,7 +123,7 @@ RSpec.describe 'DELETE /medical_professionals' do
           }
           
           expect(response).to_not be_successful
-          expect(response.status).to eq(422)
+          expect(response.status).to eq(400)
         end
       end
     end
