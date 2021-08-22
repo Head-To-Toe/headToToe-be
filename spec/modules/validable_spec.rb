@@ -2,18 +2,18 @@ require 'rails_helper'
 include Validable
 
 RSpec.describe 'Validable' do
-  context 'valid_params?' do
+  context 'valid?' do
     it 'Accepts all valid params' do
       params = {state: 'Colorado', type: 'mhp', vetted: 'true'}
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
     end
 
     it 'Accepts valid state & type, vetted nil, sets default' do
       params = {state: 'Colorado', type: 'mhp'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('Colorado')
       expect(params[:type]).to eq('mhp')
@@ -24,7 +24,7 @@ RSpec.describe 'Validable' do
       params = {state: 'Colorado', vetted: 'false'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('Colorado')
       expect(params[:type]).to eq('all')
@@ -35,7 +35,7 @@ RSpec.describe 'Validable' do
       params = {type: 'doctor', vetted: 'false'}
       default_values(params)
 
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('all')
       expect(params[:type]).to eq('doctor')
@@ -46,7 +46,7 @@ RSpec.describe 'Validable' do
       params = {type: 'doctor', vetted: 'false'}
       default_values(params)
       
-      expect(valid_params?(params)).to eq(true)
+      expect(valid?(params)).to eq(true)
 
       expect(params[:state]).to eq('all')
       expect(params[:type]).to eq('doctor')
@@ -114,6 +114,90 @@ RSpec.describe 'Validable' do
       expect(check_vetted(0)).to eq(false)
       expect(check_vetted(12)).to eq(false)
       expect(check_vetted(Array)).to eq(false)
+    end
+  end
+
+  context 'valid_create?(params)' do
+    it 'returns true if all require params are included' do
+      params = { first_name: 'blah', last_name: 'bleh', profession: 'doctor', insurance: ['expensive']}
+
+      expect(valid_create?(params)).to eq(true)
+    end
+
+    it 'returns false if all profession is not doctor or mhp' do
+      params = { first_name: 'blah', last_name: 'bleh', profession: 'fancy', insurance: ['expensive']}
+
+      expect(valid_create?(params)).to eq(false)
+    end
+
+    it 'returns false if first_name is not included, blank, or not a string' do
+      params1 = { first_name: '', last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params2 = { last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params3 = { first_name: 0, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params4 = { first_name: nil, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params5 = { first_name: 1, last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+      params6 = { first_name: ['blarg'], last_name: 'bleh', profession: 'mhp', insurance: ['expensive']}
+
+      expect(valid_create?(params1)).to eq(false)
+      expect(valid_create?(params2)).to eq(false)
+      expect(valid_create?(params3)).to eq(false)
+      expect(valid_create?(params4)).to eq(false)
+      expect(valid_create?(params5)).to eq(false)
+      expect(valid_create?(params6)).to eq(false)
+    end
+
+    it 'returns false if last_name is not included, blank, or not a string' do
+      params1 = { first_name: 'blah', profession: 'doctor', insurance: ['expensive']}
+      params2 = { first_name: 'blah', last_name: '', profession: 'doctor', insurance: ['expensive']}
+      params3 = { first_name: 'blah', last_name: 0, profession: 'doctor', insurance: ['expensive']}
+      params4 = { first_name: 'blah', last_name: 1, profession: 'doctor', insurance: ['expensive']}
+      params5 = { first_name: 'blah', last_name: nil, profession: 'doctor', insurance: ['expensive']}
+      params6 = { first_name: 'blah', last_name: ['bleh'], profession: 'doctor', insurance: ['expensive']}
+
+      expect(valid_create?(params1)).to eq(false)
+      expect(valid_create?(params2)).to eq(false)
+      expect(valid_create?(params3)).to eq(false)
+      expect(valid_create?(params4)).to eq(false)
+      expect(valid_create?(params5)).to eq(false)
+      expect(valid_create?(params6)).to eq(false)
+    end
+  end
+
+  context 'valid_update_or_destroy?(params)' do
+    it 'returns true if all required params are included' do
+      params1 = { id: '1', profession: 'doctor'}
+      params2 = { id: '2', profession: 'mhp'}
+
+      expect(valid_update_or_destroy?(params1)).to eq(true)
+      expect(valid_update_or_destroy?(params2)).to eq(true)
+    end
+
+    it 'returns false if profession is not doctor or mhp' do
+      params1 = { id: '1', profession: 'fancy'}
+      params2 = { id: '2', profession: ''}
+      params3 = { id: '2', profession: 1}
+      params4 = { id: '2', profession: nil}
+      params5 = { id: '2', profession: ['doctor']}
+      params6 = { id: '2'}
+
+      expect(valid_update_or_destroy?(params1)).to eq(false)
+      expect(valid_update_or_destroy?(params2)).to eq(false)
+      expect(valid_update_or_destroy?(params3)).to eq(false)
+      expect(valid_update_or_destroy?(params4)).to eq(false)
+      expect(valid_update_or_destroy?(params5)).to eq(false)
+      expect(valid_update_or_destroy?(params6)).to eq(false)
+    end
+
+    it 'returns false if id is not a valid id' do
+      params1 = { id: 'one', profession: 'doctor'}
+      params2 = { id: [1], profession: 'doctor'}
+      params3 = { id: '', profession: 'doctor'}
+      params4 = { profession: 'doctor'}
+
+      expect(valid_update_or_destroy?(params1)).to eq(false)
+      expect(valid_update_or_destroy?(params2)).to eq(false)
+      expect(valid_update_or_destroy?(params3)).to eq(false)
+      expect(valid_update_or_destroy?(params4)).to eq(false)
     end
   end
 end
