@@ -43,4 +43,10 @@ module Validable
     return false if params[:insurance].class != Array
     true
   end
+
+  def valid_update_or_destroy?(params)
+    return false if params[:profession] != 'doctor' && params[:profession] != 'mhp'
+    return false if params[:id].class != Integer
+    true
+  end
 end
